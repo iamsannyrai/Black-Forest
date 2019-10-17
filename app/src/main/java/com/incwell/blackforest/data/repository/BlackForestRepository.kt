@@ -1,13 +1,17 @@
-package com.incwell.blackforest.data
+package com.incwell.blackforest.data.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.incwell.blackforest.LOG_TAG
+import com.incwell.blackforest.data.BlackForestService
+import com.incwell.blackforest.data.model.Category
+import com.incwell.blackforest.data.model.Product
 import com.incwell.blackforest.util.NoInternetException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.SocketTimeoutException
 
 class BlackForestRepository(private val blackForestService: BlackForestService) {
 
@@ -26,6 +30,8 @@ class BlackForestRepository(private val blackForestService: BlackForestService) 
                 retrieveCategories()
                 retrieveFeaturedProduct()
             } catch (e: NoInternetException) {
+                Log.i(LOG_TAG, e.message!!)
+            } catch (e: SocketTimeoutException) {
                 Log.i(LOG_TAG, e.message!!)
             }
         }

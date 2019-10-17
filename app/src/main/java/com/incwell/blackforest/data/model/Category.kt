@@ -1,4 +1,4 @@
-package com.incwell.blackforest.data
+package com.incwell.blackforest.data.model
 
 data class Category(
     var status: Boolean,

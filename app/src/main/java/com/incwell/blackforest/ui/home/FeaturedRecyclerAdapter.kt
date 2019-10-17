@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.incwell.blackforest.R
-import com.incwell.blackforest.data.Product
+import com.incwell.blackforest.data.model.Product
 
 
 class FeaturedRecyclerAdapter(
@@ -19,9 +19,12 @@ class FeaturedRecyclerAdapter(
 ) :
     RecyclerView.Adapter<FeaturedRecyclerAdapter.ViewHolder>() {
 
+    private lateinit var view: View
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.featured_list_item, parent, false)
+
+        view = inflater.inflate(R.layout.featured_list_item, parent, false)
         return ViewHolder(view)
     }
 

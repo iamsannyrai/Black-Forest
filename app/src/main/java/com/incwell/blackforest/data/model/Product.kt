@@ -1,4 +1,4 @@
-package com.incwell.blackforest.data
+package com.incwell.blackforest.data.model
 
 data class Product(
     var is_feature: Boolean,

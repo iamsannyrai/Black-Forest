@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.incwell.blackforest.R
-import com.incwell.blackforest.data.Category
+import com.incwell.blackforest.data.model.Category
 
 class CategoryRecyclerAdapter(
     val context: Context,

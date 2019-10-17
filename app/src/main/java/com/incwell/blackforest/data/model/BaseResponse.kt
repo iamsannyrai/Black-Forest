@@ -1,4 +1,4 @@
-package com.incwell.blackforest.data
+package com.incwell.blackforest.data.model
 
 class BaseResponse<T> {
     var data: T? = null

@@ -2,6 +2,9 @@ package com.incwell.blackforest.data
 
 import androidx.annotation.WorkerThread
 import com.incwell.blackforest.WEB_SERVICE_URL
+import com.incwell.blackforest.data.model.BaseResponse
+import com.incwell.blackforest.data.model.Category
+import com.incwell.blackforest.data.model.Product
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit

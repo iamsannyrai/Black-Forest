@@ -1,6 +1,6 @@
 package com.incwell.blackforest.module
 
-import com.incwell.blackforest.data.BlackForestRepository
+import com.incwell.blackforest.data.repository.BlackForestRepository
 import com.incwell.blackforest.data.BlackForestService
 import com.incwell.blackforest.data.NetworkStatusInterceptor
 import com.incwell.blackforest.ui.home.HomeViewModel

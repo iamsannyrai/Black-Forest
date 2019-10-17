@@ -80,5 +80,10 @@ dependencies {
     def koin_version = "2.0.1"
     implementation "org.koin:koin-android:$koin_version" // Koin for Android
     implementation "org.koin:koin-androidx-scope:$koin_version" // or Koin for Lifecycle scoping
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version" // or Koin for Android Architecture ViewModel
+    // or Koin for Android Architecture ViewModel
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+
+    //for shimmer effect
+    def shimmer_version = "0.5.0"
+    implementation "com.facebook.shimmer:shimmer:$shimmer_version"
 }
