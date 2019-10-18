@@ -5,11 +5,13 @@ import com.incwell.blackforest.WEB_SERVICE_URL
 import com.incwell.blackforest.data.model.BaseResponse
 import com.incwell.blackforest.data.model.Category
 import com.incwell.blackforest.data.model.Product
+import com.incwell.blackforest.data.model.SubCategory
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface BlackForestService {
 
@@ -18,6 +20,12 @@ interface BlackForestService {
 
     @GET("featured-item")
     suspend fun getFeaturedProduct(): Response<BaseResponse<List<Product>>>
+
+    @GET("category/{id}")
+    suspend fun getSubcategories(@Path("id") id:Int) :Response<BaseResponse<List<SubCategory>>>
+
+    @GET("sub-category/{id}")
+    suspend fun getSubcategoyProducts(@Path("id") id:Int) : Response<BaseResponse<List<Product>>>
 
     @WorkerThread
     companion object {

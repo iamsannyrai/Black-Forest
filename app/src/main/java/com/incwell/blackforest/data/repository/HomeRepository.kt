@@ -7,13 +7,14 @@ import com.incwell.blackforest.LOG_TAG
 import com.incwell.blackforest.data.BlackForestService
 import com.incwell.blackforest.data.model.Category
 import com.incwell.blackforest.data.model.Product
+import com.incwell.blackforest.data.model.SubCategory
 import com.incwell.blackforest.util.NoInternetException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.net.SocketTimeoutException
 
-class BlackForestRepository(private val blackForestService: BlackForestService) {
+class HomeRepository(private val blackForestService: BlackForestService) {
 
     private val _featuredData = MutableLiveData<List<Product>>()
     val featuredData: LiveData<List<Product>>
@@ -22,7 +23,6 @@ class BlackForestRepository(private val blackForestService: BlackForestService) 
     private val _categoryData = MutableLiveData<List<Category>>()
     val categoryData: LiveData<List<Category>>
         get() = _categoryData
-
 
     init {
         CoroutineScope(Dispatchers.IO).launch {

@@ -1,6 +1,8 @@
 package com.incwell.blackforest
 
 import android.app.Application
+import com.incwell.blackforest.module.blackForestModule
+import com.incwell.blackforest.module.categoryModule
 import com.incwell.blackforest.module.homeModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
@@ -17,7 +19,9 @@ class BlackForestApplication : Application() {
             // module list
             modules(
                 listOf(
-                    homeModule
+                    blackForestModule,
+                    homeModule,
+                    categoryModule
                 )
             )
         }

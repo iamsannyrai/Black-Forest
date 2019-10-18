@@ -13,9 +13,9 @@ import com.incwell.blackforest.data.model.Product
 
 
 class FeaturedRecyclerAdapter(
-    val context: Context,
-    val products: List<Product>,
-    val itemListener: FeaturedItemListener
+    private val context: Context,
+    private val products: List<Product>,
+    private val itemListener: FeaturedItemListener
 ) :
     RecyclerView.Adapter<FeaturedRecyclerAdapter.ViewHolder>() {
 

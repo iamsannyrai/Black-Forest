@@ -1,8 +1,6 @@
 package com.incwell.blackforest
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -13,6 +11,7 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
+import com.incwell.blackforest.ui.category.subCategory.SubCategoryViewModel
 import com.incwell.blackforest.ui.home.HomeViewModel
 import org.koin.android.ext.android.inject
 
@@ -21,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     //activity viewmodel that can be shared in its fragment
     // by using val model:ViewModel by sharedViewModel()
     val homeViewModel:HomeViewModel by inject()
+    val subCategoryViewModel: SubCategoryViewModel by inject()
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
