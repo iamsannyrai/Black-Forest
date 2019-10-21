@@ -4,6 +4,7 @@ import android.app.Application
 import com.incwell.blackforest.module.blackForestModule
 import com.incwell.blackforest.module.categoryModule
 import com.incwell.blackforest.module.homeModule
+import com.incwell.blackforest.module.searchModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
 import org.koin.android.ext.koin.androidLogger
@@ -21,7 +22,8 @@ class BlackForestApplication : Application() {
                 listOf(
                     blackForestModule,
                     homeModule,
-                    categoryModule
+                    categoryModule,
+                    searchModule
                 )
             )
         }

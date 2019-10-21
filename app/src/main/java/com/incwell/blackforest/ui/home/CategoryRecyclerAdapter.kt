@@ -13,14 +13,22 @@ import com.incwell.blackforest.data.model.Category
 
 class CategoryRecyclerAdapter(
     val context: Context,
+    var isFromHome:Boolean,
     val categories: List<Category>,
     val itemListener: CategoryItemListener
 ) :
     RecyclerView.Adapter<CategoryRecyclerAdapter.ViewHolder>() {
 
+    private lateinit var view: View
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.category_list_item, parent, false)
+        view = if (isFromHome) {
+            inflater.inflate(R.layout.category_list_item, parent, false)
+        } else {
+            inflater.inflate(R.layout.category_grid_item, parent, false)
+        }
+
         return ViewHolder(view)
     }
 

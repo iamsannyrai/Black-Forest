@@ -2,16 +2,14 @@ package com.incwell.blackforest.data
 
 import androidx.annotation.WorkerThread
 import com.incwell.blackforest.WEB_SERVICE_URL
-import com.incwell.blackforest.data.model.BaseResponse
-import com.incwell.blackforest.data.model.Category
-import com.incwell.blackforest.data.model.Product
-import com.incwell.blackforest.data.model.SubCategory
+import com.incwell.blackforest.data.model.*
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface BlackForestService {
 
@@ -22,10 +20,13 @@ interface BlackForestService {
     suspend fun getFeaturedProduct(): Response<BaseResponse<List<Product>>>
 
     @GET("category/{id}")
-    suspend fun getSubcategories(@Path("id") id:Int) :Response<BaseResponse<List<SubCategory>>>
+    suspend fun getSubcategories(@Path("id") id: Int): Response<BaseResponse<List<SubCategory>>>
 
     @GET("sub-category/{id}")
-    suspend fun getSubcategoyProducts(@Path("id") id:Int) : Response<BaseResponse<List<Product>>>
+    suspend fun getSubcategoyProducts(@Path("id") id: Int): Response<BaseResponse<List<Product>>>
+
+    @GET("search")
+    suspend fun getSearchedProducts(@Query("search-for") tag: String): Response<BaseResponse<List<Search>>>
 
     @WorkerThread
     companion object {

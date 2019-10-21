@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_nav_home_to_categoryFragment"
             app:destination="@id/categoryFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_searchresultFragment"
+            app:destination="@id/searchresultFragment" />
     </fragment>
 
     <fragment
@@ -51,6 +54,19 @@
         android:id="@+id/categoryFragment"
         android:name="com.incwell.blackforest.ui.category.CategoryFragment"
         android:label="All Categories"
-        tools:layout="@layout/fragment_category" />
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_categoryFragment_to_subCategoryFragment"
+            app:destination="@id/subCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchresultFragment"
+        android:name="com.incwell.blackforest.SearchFragment"
+        android:label="Search Results"
+        tools:layout="@layout/fragment_searchresult">
+        <argument
+            android:name="searchTag"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

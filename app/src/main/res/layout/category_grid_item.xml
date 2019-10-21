@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imageView_productImage"
+            android:id="@+id/imageView_categoryImage"
             android:layout_width="200dp"
             android:layout_height="200dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -22,32 +22,17 @@
             tools:srcCompat="@tools:sample/backgrounds/scenic[9]" />
 
         <TextView
-            android:id="@+id/tv_productName"
+            android:id="@+id/tv_categoryName"
             style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="#fff"
+            android:background="@color/colorAccent"
             android:text="Chocolate Truffle"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
+            android:textColor="#fff"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/imageView_productImage"
-            app:layout_constraintStart_toStartOf="@+id/imageView_productImage"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_productDescription"
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:maxLines="2"
-            android:background="#fff"
-            android:textColor="@color/colorAccent"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline4"
-            app:layout_constraintStart_toStartOf="@+id/guideline3" />
+            app:layout_constraintEnd_toEndOf="@+id/imageView_categoryImage"
+            app:layout_constraintStart_toStartOf="@+id/imageView_categoryImage" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline3"

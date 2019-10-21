@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,6 +19,7 @@ import com.incwell.blackforest.data.model.Product
 import com.incwell.blackforest.ui.category.subCategory.SubCategoryViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
+
 class HomeFragment : Fragment(), CategoryRecyclerAdapter.CategoryItemListener,
     FeaturedRecyclerAdapter.FeaturedItemListener {
 
@@ -30,7 +32,7 @@ class HomeFragment : Fragment(), CategoryRecyclerAdapter.CategoryItemListener,
     private lateinit var shimmerFrameLayout: ShimmerFrameLayout
     private lateinit var nestedScrollView: NestedScrollView
     private lateinit var seeAllCategoryCardView: MaterialCardView
-
+    private lateinit var searchProduct: SearchView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,9 +45,24 @@ class HomeFragment : Fragment(), CategoryRecyclerAdapter.CategoryItemListener,
         shimmerFrameLayout = root.findViewById(R.id.shimmer_layout)
         nestedScrollView = root.findViewById(R.id.nested_scroll_view)
         seeAllCategoryCardView = root.findViewById(R.id.category_viewmore)
-
+        searchProduct = root.findViewById(R.id.searcview_product)
 
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+
+        searchProduct.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                val searchBundle = Bundle()
+                searchBundle.putString("searchTag",query)
+                navController.navigate(R.id.action_nav_home_to_searchresultFragment,searchBundle)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                return true
+            }
+
+        })
 
         seeAllCategoryCardView.setOnClickListener {
             navController.navigate(R.id.action_nav_home_to_categoryFragment)
@@ -58,7 +75,7 @@ class HomeFragment : Fragment(), CategoryRecyclerAdapter.CategoryItemListener,
         })
 
         homeViewModel.categoryData.observe(this, Observer {
-            val adapter = CategoryRecyclerAdapter(requireContext(), it, this)
+            val adapter = CategoryRecyclerAdapter(requireContext(),true, it, this)
             categoryRecyclerView.adapter = adapter
             loadData()
         })
