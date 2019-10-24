@@ -1,4 +1,4 @@
-package com.incwell.blackforest
+package com.incwell.blackforest.ui.search
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.incwell.blackforest.R
 import com.incwell.blackforest.data.model.SearchedProduct
 
 class SearchRecyclerAdapter(

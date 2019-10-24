@@ -1,16 +1,16 @@
 package com.incwell.blackforest
 
 import android.os.Bundle
+import android.view.Menu
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import android.view.Menu
 import com.incwell.blackforest.ui.category.subCategory.SubCategoryViewModel
 import com.incwell.blackforest.ui.home.HomeViewModel
 import org.koin.android.ext.android.inject
@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     //activity viewmodel that can be shared in its fragment
     // by using val model:ViewModel by sharedViewModel()
-    val homeViewModel:HomeViewModel by inject()
+    val homeViewModel: HomeViewModel by inject()
     val subCategoryViewModel: SubCategoryViewModel by inject()
 
     private lateinit var appBarConfiguration: AppBarConfiguration

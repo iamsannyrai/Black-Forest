@@ -1,4 +1,4 @@
-package com.incwell.blackforest
+package com.incwell.blackforest.ui.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

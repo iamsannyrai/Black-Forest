@@ -7,16 +7,14 @@ import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface BlackForestService {
 
-    @GET("category")
+    @GET("category/")
     suspend fun getCategories(): Response<BaseResponse<List<Category>>>
 
-    @GET("featured-item")
+    @GET("featured-item/")
     suspend fun getFeaturedProduct(): Response<BaseResponse<List<Product>>>
 
     @GET("category/{id}")
@@ -27,6 +25,12 @@ interface BlackForestService {
 
     @GET("search")
     suspend fun getSearchedProducts(@Query("search-for") tag: String): Response<BaseResponse<List<Search>>>
+
+    @POST("google")
+    suspend fun sendGoogleAccessToken(@Body access_token:AccessToken):Response<BaseResponse<AccessToken>>
+
+    @POST("register/")
+    suspend fun registerUser(@Body user:User):Response<BaseResponse<User>>
 
     @WorkerThread
     companion object {

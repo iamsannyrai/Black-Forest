@@ -49,11 +49,11 @@ class HomeFragment : Fragment(), CategoryRecyclerAdapter.CategoryItemListener,
 
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
 
-        searchProduct.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+        searchProduct.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 val searchBundle = Bundle()
-                searchBundle.putString("searchTag",query)
-                navController.navigate(R.id.action_nav_home_to_searchresultFragment,searchBundle)
+                searchBundle.putString("searchTag", query)
+                navController.navigate(R.id.action_nav_home_to_searchresultFragment, searchBundle)
                 return false
             }
 
@@ -65,6 +65,7 @@ class HomeFragment : Fragment(), CategoryRecyclerAdapter.CategoryItemListener,
         })
 
         seeAllCategoryCardView.setOnClickListener {
+
             navController.navigate(R.id.action_nav_home_to_categoryFragment)
         }
 
@@ -75,7 +76,7 @@ class HomeFragment : Fragment(), CategoryRecyclerAdapter.CategoryItemListener,
         })
 
         homeViewModel.categoryData.observe(this, Observer {
-            val adapter = CategoryRecyclerAdapter(requireContext(),true, it, this)
+            val adapter = CategoryRecyclerAdapter(requireContext(), true, it, this)
             categoryRecyclerView.adapter = adapter
             loadData()
         })

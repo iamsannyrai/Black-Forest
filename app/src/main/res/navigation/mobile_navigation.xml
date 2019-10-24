@@ -61,7 +61,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchresultFragment"
-        android:name="com.incwell.blackforest.SearchFragment"
+        android:name="com.incwell.blackforest.ui.search.SearchFragment"
         android:label="Search Results"
         tools:layout="@layout/fragment_searchresult">
         <argument

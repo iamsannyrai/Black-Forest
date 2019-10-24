@@ -1,6 +1,6 @@
 package com.incwell.blackforest.module
 
-import com.incwell.blackforest.SearchViewModel
+import com.incwell.blackforest.ui.search.SearchViewModel
 import com.incwell.blackforest.data.repository.SearchRepository
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
