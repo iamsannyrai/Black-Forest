@@ -14,7 +14,7 @@ import org.koin.android.ext.android.inject
 
 class SignupActivity : AppCompatActivity() {
 
-    private val signupViewModel: SignupViewModel by inject()
+    private val authenticationViewModel: AuthenticationViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +26,7 @@ class SignupActivity : AppCompatActivity() {
         bindData()
         hideError()
 
-        signupViewModel.registrationResponse.observe(this, Observer {
+        authenticationViewModel.response.observe(this, Observer {
             if (it) {
                 val intent = Intent(this, SigninActivity::class.java)
                 startActivity(intent)
@@ -71,13 +71,13 @@ class SignupActivity : AppCompatActivity() {
                 }
 
                 else -> {
-                    signupViewModel.registerUser(
+                    authenticationViewModel.registerUser(
                         user_name.text.toString(),
                         first_name.text.toString(),
                         last_name.text.toString(),
                         email.text.toString(),
                         password.text.toString(),
-                        city.text.toString().toInt(),
+                        1,
                         address.text.toString(),
                         phone_number.text.toString()
                     )

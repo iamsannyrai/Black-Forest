@@ -5,17 +5,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.incwell.blackforest.LOG_TAG
+import com.incwell.blackforest.data.model.SignIn
 import com.incwell.blackforest.data.model.User
-import com.incwell.blackforest.data.repository.SignupRepository
+import com.incwell.blackforest.data.repository.AuthenticationRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SignupViewModel(private val signupRepository: SignupRepository) : ViewModel() {
+class AuthenticationViewModel(private val authenticationRepository: AuthenticationRepository) : ViewModel() {
 
-    private val _registrationResponse = MutableLiveData<Boolean>()
-    val registrationResponse: LiveData<Boolean>
-        get() = _registrationResponse
+    private val _response = MutableLiveData<Boolean>()
+    val response: LiveData<Boolean>
+        get() = _response
 
     private val _responseMessage = MutableLiveData<String>()
     val responseMessage: LiveData<String>
@@ -35,13 +36,27 @@ class SignupViewModel(private val signupRepository: SignupRepository) : ViewMode
             User(mUsername, mFirstname, mLastname, mEmail, mPassword, mCity, mAddress, mPhone)
         Log.i(LOG_TAG, "$newUser")
         CoroutineScope(Dispatchers.IO).launch {
-            val response = signupRepository.registerUser(newUser)
+            val response = authenticationRepository.registerUser(newUser)
             if (response.isSuccessful) {
-                _registrationResponse.postValue(response.body()?.status)
+                _response.postValue(response.body()?.status)
                 Log.i(LOG_TAG, "${response.body()?.data}")
             } else {
                 _responseMessage.postValue("${response.body()?.data}")
                 Log.i(LOG_TAG, "${response.body()?.data}")
+            }
+        }
+    }
+
+
+    fun signIn(username: String, password: String) {
+        val credential = SignIn(username, password)
+        CoroutineScope(Dispatchers.IO).launch {
+            val signinResponse = authenticationRepository.signinUser(credential)
+            if (signinResponse.isSuccessful) {
+                _response.postValue(signinResponse.body()!!.status)
+                Log.i(LOG_TAG, "${signinResponse.body()?.data}")
+            } else {
+                Log.i(LOG_TAG, "${signinResponse.body()?.data}")
             }
         }
     }

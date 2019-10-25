@@ -32,6 +32,9 @@ interface BlackForestService {
     @POST("register/")
     suspend fun registerUser(@Body user:User):Response<BaseResponse<User>>
 
+    @POST("login/")
+    suspend fun signinUser(@Body signIn: SignIn):Response<BaseResponse<SignInResponse>>
+
     @WorkerThread
     companion object {
         operator fun invoke(
