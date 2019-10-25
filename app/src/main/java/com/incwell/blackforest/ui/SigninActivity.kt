@@ -31,6 +31,14 @@ class SigninActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
 
+        //checking if token exist in sharedpreference or not
+        authenticationViewModel.sharedPreference()
+        if (authenticationViewModel.isPresent!!) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         login_btn.setOnClickListener {
             when {
                 signin_username.text.toString().isEmpty() -> {
@@ -50,6 +58,7 @@ class SigninActivity : AppCompatActivity() {
                         if (it) {
                             val intent = Intent(this, MainActivity::class.java)
                             startActivity(intent)
+                            finish()
                         }
                     })
 
