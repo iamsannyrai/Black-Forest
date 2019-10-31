@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.incwell.blackforest.Cities
 import com.incwell.blackforest.R
@@ -26,16 +27,16 @@ class SignupActivity : AppCompatActivity() {
         bindData()
         hideError()
 
-        authenticationViewModel.response.observe(this, Observer {
-            if (it) {
-                val intent = Intent(this, SigninActivity::class.java)
-                startActivity(intent)
-            }
+        authenticationViewModel.signupResponse.observe(this, Observer {
+            val intent = Intent(this, SigninActivity::class.java)
+            startActivity(intent)
+            finish()
         })
+
     }
 
     private fun bindData() {
-        register.setOnClickListener {
+        register.setOnClickListener {view->
             when {
                 first_name.text.toString().isEmpty() -> {
                     handleEmptyError(til_first_name)
@@ -81,6 +82,10 @@ class SignupActivity : AppCompatActivity() {
                         address.text.toString(),
                         phone_number.text.toString()
                     )
+
+                    authenticationViewModel.messageResponse.observe(this, Observer {
+                        Snackbar.make(view,it,Snackbar.LENGTH_SHORT).show()
+                    })
                 }
 
             }

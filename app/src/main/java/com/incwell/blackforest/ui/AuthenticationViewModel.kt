@@ -5,28 +5,33 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.incwell.blackforest.LOG_TAG
-import com.incwell.blackforest.data.model.SignIn
-import com.incwell.blackforest.data.model.User
-import com.incwell.blackforest.data.model.UserToken
+import com.incwell.blackforest.data.model.*
 import com.incwell.blackforest.data.repository.AuthenticationRepository
 import com.incwell.blackforest.tokenKey
+import com.incwell.blackforest.util.NoInternetException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Response
+import java.net.SocketTimeoutException
 
 class AuthenticationViewModel(private val authenticationRepository: AuthenticationRepository) :
     ViewModel() {
 
     var isPresent: Boolean? = false
-    var userToken:UserToken? = null
+    var userToken: UserToken? = null
 
-    private val _response = MutableLiveData<Boolean>()
-    val response: LiveData<Boolean>
-        get() = _response
+    private val _loginResponse = MutableLiveData<SignInResponse>()
+    val loginResponse: LiveData<SignInResponse>
+        get() = _loginResponse
 
-    private val _responseMessage = MutableLiveData<String>()
-    val responseMessage: LiveData<String>
-        get() = _responseMessage
+    private val _signupResponse = MutableLiveData<User>()
+    val signupResponse: LiveData<User>
+        get() = _signupResponse
+
+    private val _messageResponse = MutableLiveData<String>()
+    val messageResponse: LiveData<String>
+        get() = _messageResponse
 
 
     fun sharedPreference() {
@@ -50,30 +55,39 @@ class AuthenticationViewModel(private val authenticationRepository: Authenticati
             User(mUsername, mFirstname, mLastname, mEmail, mPassword, mCity, mAddress, mPhone)
         Log.i(LOG_TAG, "$newUser")
         CoroutineScope(Dispatchers.IO).launch {
-            val response = authenticationRepository.registerUser(newUser)
-            if (response.isSuccessful) {
-                _response.postValue(response.body()?.status)
-                Log.i(LOG_TAG, "${response.body()?.data}")
-            } else {
-                _responseMessage.postValue("${response.body()?.data}")
-                Log.i(LOG_TAG, "${response.body()?.data}")
+            try {
+                val response = authenticationRepository.registerUser(newUser)
+                if (response.isSuccessful) {
+                    _signupResponse.postValue(response.body()!!.data)
+                } else {
+                    _messageResponse.postValue("Something went wrong!")
+                }
+            } catch (e: NoInternetException) {
+                _messageResponse.postValue(e.message)
+            } catch (e: SocketTimeoutException) {
+                _messageResponse.postValue(e.message)
             }
         }
     }
 
-
     fun signIn(username: String, password: String) {
         val credential = SignIn(username, password)
         CoroutineScope(Dispatchers.IO).launch {
-            val signinResponse = authenticationRepository.signinUser(credential)
-            if (signinResponse.isSuccessful) {
-                authenticationRepository.saveCredential(
-                    tokenKey,
-                    UserToken(signinResponse.body()!!.data!!.token)
-                )
-                _response.postValue(signinResponse.body()!!.status)
-            } else {
-                Log.i(LOG_TAG, "${signinResponse.body()?.data}")
+            try {
+                val signInResponse = authenticationRepository.signinUser(credential)
+                if (signInResponse.isSuccessful) {
+                    authenticationRepository.saveCredential(
+                        tokenKey,
+                        UserToken(signInResponse.body()!!.data!!.token)
+                    )
+                    _loginResponse.postValue(signInResponse.body()!!.data)
+                } else {
+                    _messageResponse.postValue("Invalid credentials!")
+                }
+            } catch (e: NoInternetException) {
+                _messageResponse.postValue(e.message)
+            } catch (e: SocketTimeoutException) {
+                _messageResponse.postValue(e.message)
             }
         }
     }

@@ -40,7 +40,7 @@ class SigninActivity : AppCompatActivity() {
             finish()
         }
 
-        login_btn.setOnClickListener {
+        login_btn.setOnClickListener { view ->
             when {
                 signin_username.text.toString().isEmpty() -> {
                     handleEmptyError(til_signin_username)
@@ -51,22 +51,25 @@ class SigninActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
                 else -> {
+                    progressBar.visibility = View.VISIBLE
                     authenticationViewModel.signIn(
                         signin_username.text.toString(),
                         signin_password.text.toString()
                     )
-                    authenticationViewModel.response.observe(this, Observer {
-                        if (it) {
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        }
+                    authenticationViewModel.loginResponse.observe(this, Observer {
+                        progressBar.visibility = View.GONE
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     })
 
+                    authenticationViewModel.messageResponse.observe(this, Observer {
+                        progressBar.visibility = View.GONE
+                        Snackbar.make(view, it, Snackbar.LENGTH_SHORT).show()
+                    })
                 }
             }
         }
-
 
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.accessToken))
@@ -82,7 +85,6 @@ class SigninActivity : AppCompatActivity() {
         register_btn.setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
-
         }
 
         hideError()
