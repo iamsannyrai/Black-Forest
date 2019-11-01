@@ -91,4 +91,8 @@ class AuthenticationViewModel(private val authenticationRepository: Authenticati
             }
         }
     }
+
+    fun onLogoutButtonClicked() {
+        authenticationRepository.deleteCredential(tokenKey)
+    }
 }
