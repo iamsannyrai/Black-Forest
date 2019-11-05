@@ -19,7 +19,6 @@ class AuthenticationViewModel(private val authenticationRepository: Authenticati
     ViewModel() {
 
     var isPresent: Boolean? = false
-    var userToken: UserToken? = null
 
     private val _loginResponse = MutableLiveData<SignInResponse>()
     val loginResponse: LiveData<SignInResponse>
@@ -36,9 +35,6 @@ class AuthenticationViewModel(private val authenticationRepository: Authenticati
 
     fun sharedPreference() {
         isPresent = authenticationRepository.checkCredential(tokenKey)
-        if (isPresent == true) {
-            userToken = authenticationRepository.getCredential(tokenKey)
-        }
     }
 
     fun registerUser(
@@ -78,7 +74,7 @@ class AuthenticationViewModel(private val authenticationRepository: Authenticati
                 if (signInResponse.isSuccessful) {
                     authenticationRepository.saveCredential(
                         tokenKey,
-                        UserToken(signInResponse.body()!!.data!!.token)
+                        signInResponse.body()!!.data!!.token
                     )
                     _loginResponse.postValue(signInResponse.body()!!.data)
                 } else {

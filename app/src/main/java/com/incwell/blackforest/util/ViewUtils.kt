@@ -26,3 +26,6 @@ fun hideErrorHint(textInputEditText: TextInputEditText, textInputLayout: TextInp
 fun dropDown(context: Context, objects: Array<String>, id: AutoCompleteTextView) {
     id.setAdapter(ArrayAdapter(context, R.layout.dropdown_menu_pop_item, objects))
 }
+
+
+

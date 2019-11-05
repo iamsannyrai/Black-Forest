@@ -1,5 +1,9 @@
 package com.incwell.blackforest.data.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class Product(
     var is_feature: Boolean,
     var status: Boolean,
@@ -11,4 +15,4 @@ data class Product(
     val ingredeint: List<String>,
     val tags: List<String>,
     val price: String
-)
+):Parcelable

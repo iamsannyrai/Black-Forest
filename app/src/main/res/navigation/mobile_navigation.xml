@@ -11,9 +11,6 @@
         android:label="Black Forest"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_nav_home_to_productFragment"
-            app:destination="@id/productFragment" />
-        <action
             android:id="@+id/action_nav_home_to_subCategoryFragment"
             app:destination="@id/subCategoryFragment" />
         <action
@@ -41,10 +38,6 @@
         android:name="com.incwell.blackforest.ui.contact.ContactFragment"
         android:label="Contact"
         tools:layout="@layout/fragment_contact" />
-    <fragment
-        android:id="@+id/productFragment"
-        android:name="com.incwell.blackforest.ui.product.ProductFragment"
-        tools:layout="@layout/fragment_product" />
     <fragment
         android:id="@+id/subCategoryFragment"
         android:name="com.incwell.blackforest.ui.category.subCategory.SubCategoryFragment"

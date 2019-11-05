@@ -35,13 +35,18 @@ interface BlackForestService {
     @POST("login/")
     suspend fun signinUser(@Body signIn: SignIn):Response<BaseResponse<SignInResponse>>
 
+    @GET("add-to-cart")
+    suspend fun getCartItem(): Response<BaseResponse<List<CartItem>>>
+
     @WorkerThread
     companion object {
         operator fun invoke(
-            networkStatusInterceptor: NetworkStatusInterceptor
+            networkStatusInterceptor: NetworkStatusInterceptor,
+            userTokenInterceptor: UserTokenInterceptor
         ): BlackForestService {
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(networkStatusInterceptor)
+                .addInterceptor(userTokenInterceptor)
                 .build()
 
             return Retrofit.Builder()

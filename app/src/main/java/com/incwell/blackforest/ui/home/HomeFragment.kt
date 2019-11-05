@@ -1,9 +1,9 @@
 package com.incwell.blackforest.ui.home
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -16,7 +16,9 @@ import com.google.android.material.card.MaterialCardView
 import com.incwell.blackforest.R
 import com.incwell.blackforest.data.model.Category
 import com.incwell.blackforest.data.model.Product
+import com.incwell.blackforest.data.storage.SharedPref
 import com.incwell.blackforest.ui.category.subCategory.SubCategoryViewModel
+import com.incwell.blackforest.ui.product.ProductActivity
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
@@ -58,41 +60,32 @@ class HomeFragment : Fragment(), CategoryRecyclerAdapter.CategoryItemListener,
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-
                 return true
             }
-
         })
 
         seeAllCategoryCardView.setOnClickListener {
-
             navController.navigate(R.id.action_nav_home_to_categoryFragment)
         }
 
         homeViewModel.featuredData.observe(this, Observer {
             val adapter = FeaturedRecyclerAdapter(requireContext(), it, this)
             featuredRecyclerView.adapter = adapter
-            loadData()
+            stopShimmerAnimation()
         })
 
         homeViewModel.categoryData.observe(this, Observer {
             val adapter = CategoryRecyclerAdapter(requireContext(), true, it, this)
             categoryRecyclerView.adapter = adapter
-            loadData()
+            stopShimmerAnimation()
         })
-
         return root
     }
 
-    private fun loadData() {
+    private fun stopShimmerAnimation() {
         shimmerFrameLayout.stopShimmer()
         nestedScrollView.visibility = View.VISIBLE
         shimmerFrameLayout.visibility = View.GONE
-    }
-
-    override fun onResume() {
-        super.onResume()
-        shimmerFrameLayout.startShimmer()
     }
 
     override fun onPause() {
@@ -101,8 +94,9 @@ class HomeFragment : Fragment(), CategoryRecyclerAdapter.CategoryItemListener,
     }
 
     override fun onFeaturedItemClick(product: Product) {
-        homeViewModel.selectedProduct.value = product
-        navController.navigate(R.id.action_nav_home_to_productFragment)
+        val intent = Intent(activity, ProductActivity::class.java)
+        intent.putExtra("product",product)
+        startActivity(intent)
     }
 
     override fun onCategoryItemClick(category: Category) {

@@ -5,9 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.incwell.blackforest.LOG_TAG
 import com.incwell.blackforest.data.BlackForestService
+import com.incwell.blackforest.data.model.CartItem
 import com.incwell.blackforest.data.model.Category
 import com.incwell.blackforest.data.model.Product
-import com.incwell.blackforest.data.model.SubCategory
+import com.incwell.blackforest.data.storage.SharedPref
 import com.incwell.blackforest.util.NoInternetException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +28,7 @@ class HomeRepository(private val blackForestService: BlackForestService) {
     init {
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                getCartItemFromServer() //first get cart item from server and save into shared pref
                 retrieveCategories()
                 retrieveFeaturedProduct()
             } catch (e: NoInternetException) {
@@ -50,6 +52,18 @@ class HomeRepository(private val blackForestService: BlackForestService) {
         if (res) {
             val serviceData = blackForestService.getFeaturedProduct().body()?.data ?: emptyList()
             _featuredData.postValue(serviceData)
+        }
+    }
+
+    private suspend fun getCartItemFromServer() {
+        val res = blackForestService.getCartItem()
+        if (res.isSuccessful) {
+            val serviceData = blackForestService.getCartItem().body()?.data ?: emptyList()
+            //delete all previous cart items in shared preference and save new cart from web
+            SharedPref.deleteAllCartItem()
+            SharedPref.saveCartItems(serviceData)
+        } else {
+            Log.d(LOG_TAG, "Something went wrong with getCartItemFromServer()")
         }
     }
 }
