@@ -2,6 +2,7 @@ package com.incwell.blackforest
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -10,15 +11,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import com.incwell.blackforest.data.model.CartItem
 import com.incwell.blackforest.data.storage.SharedPref
 import com.incwell.blackforest.ui.AuthenticationViewModel
 import com.incwell.blackforest.ui.SigninActivity
+import com.incwell.blackforest.ui.cart.CartViewModel
 import com.incwell.blackforest.ui.category.subCategory.SubCategoryViewModel
 import com.incwell.blackforest.ui.home.HomeViewModel
 import com.incwell.blackforest.ui.product.ProductActivity
@@ -29,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     val homeViewModel: HomeViewModel by inject()
     val subCategoryViewModel: SubCategoryViewModel by inject()
     val authenticationViewModel: AuthenticationViewModel by inject()
+    val cartViewModel: CartViewModel by inject()
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -51,13 +56,16 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        //called to fetch and save cart items from server.. synchronization
+        cartViewModel.cartData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         menu!!.findItem(R.id.action_cart).setActionView(R.layout.custom_cart_layout)
-
+        val navController = findNavController(R.id.nav_host_fragment)
         if (SharedPref.getCart().size > 0) {
             val cartView =
                 menu.findItem(R.id.action_cart).actionView.findViewById<TextView>(R.id.cart_badge)
@@ -67,6 +75,7 @@ class MainActivity : AppCompatActivity() {
 
         menu.findItem(R.id.action_cart).actionView.setOnClickListener {
             Toast.makeText(this, "cart clicked", Toast.LENGTH_LONG).show()
+            navController.navigate(R.id.action_nav_home_to_cartFragment)
         }
         return true
     }

@@ -5,6 +5,5 @@ data class CartItem(
     val price: String,
     val id: Int,
     val main_image: String,
-    var incrementRate: Int = 1,
     var quantity: Int = 1
 )

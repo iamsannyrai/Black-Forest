@@ -38,6 +38,9 @@ interface BlackForestService {
     @GET("add-to-cart")
     suspend fun getCartItem(): Response<BaseResponse<List<CartItem>>>
 
+    @POST("add-to-cart/")
+    suspend fun postCartItem(@Body productId: ProductID):Response<BaseResponse<List<CartItem>>>
+
     @WorkerThread
     companion object {
         operator fun invoke(

@@ -3,10 +3,7 @@ package com.incwell.blackforest
 import android.app.Application
 import android.content.SharedPreferences
 import com.incwell.blackforest.data.storage.SharedPref
-import com.incwell.blackforest.module.blackForestModule
-import com.incwell.blackforest.module.categoryModule
-import com.incwell.blackforest.module.homeModule
-import com.incwell.blackforest.module.searchModule
+import com.incwell.blackforest.module.*
 import com.orhanobut.hawk.Hawk
 import com.orhanobut.hawk.NoEncryption
 import org.koin.android.ext.koin.androidContext
@@ -28,7 +25,8 @@ class BlackForestApplication : Application() {
                     blackForestModule,
                     homeModule,
                     categoryModule,
-                    searchModule
+                    searchModule,
+                    cartModule
                 )
             )
         }

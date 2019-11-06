@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_nav_home_to_searchresultFragment"
             app:destination="@id/searchresultFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_cartFragment"
+            app:destination="@id/cartFragment" />
     </fragment>
 
     <fragment
@@ -61,5 +64,10 @@
             android:name="searchTag"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.incwell.blackforest.ui.cart.CartFragment"
+        android:label="Cart"
+        tools:layout="@layout/fragment_cart" />
 
 </navigation>

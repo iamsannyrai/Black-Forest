@@ -28,7 +28,6 @@ class HomeRepository(private val blackForestService: BlackForestService) {
     init {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                getCartItemFromServer() //first get cart item from server and save into shared pref
                 retrieveCategories()
                 retrieveFeaturedProduct()
             } catch (e: NoInternetException) {
@@ -55,15 +54,4 @@ class HomeRepository(private val blackForestService: BlackForestService) {
         }
     }
 
-    private suspend fun getCartItemFromServer() {
-        val res = blackForestService.getCartItem()
-        if (res.isSuccessful) {
-            val serviceData = blackForestService.getCartItem().body()?.data ?: emptyList()
-            //delete all previous cart items in shared preference and save new cart from web
-            SharedPref.deleteAllCartItem()
-            SharedPref.saveCartItems(serviceData)
-        } else {
-            Log.d(LOG_TAG, "Something went wrong with getCartItemFromServer()")
-        }
-    }
 }
