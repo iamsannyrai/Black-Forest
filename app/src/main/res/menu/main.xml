@@ -8,6 +8,6 @@
         android:title="cart"/>
 
     <item android:id="@+id/action_logout"
-        android:title="Settings"/>
+        android:title="Logout"/>
 
 </menu>

@@ -31,10 +31,6 @@ interface SharedPref {
 
         }
 
-        fun reset() {
-            Hawk.put(CART_ITEM, ArrayList<CartItem>())
-        }
-
         fun getCart(): ArrayList<CartItem> {
             return if (Hawk.get<ArrayList<CartItem>>(CART_ITEM) != null){
                 Hawk.get<ArrayList<CartItem>>(CART_ITEM)

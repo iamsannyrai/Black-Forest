@@ -5,12 +5,18 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.incwell.blackforest.R
 import com.incwell.blackforest.data.model.CartItem
 import kotlinx.android.synthetic.main.cart_inc_dec.view.*
 
 
-class CartView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+class CartView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) :
     LinearLayout(context, attrs, defStyleAttr) {
     private lateinit var mCartItem: CartItem
 
@@ -38,5 +44,10 @@ class CartView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
     fun setData(cartItem: CartItem) {
         mCartItem = cartItem
         tv_display.text = mCartItem.quantity.toString()
+    }
+
+    fun getQuantity(cartItem: CartItem): Int {
+        mCartItem = cartItem
+        return mCartItem.quantity
     }
 }

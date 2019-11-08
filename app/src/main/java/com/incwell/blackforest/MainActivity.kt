@@ -74,7 +74,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         menu.findItem(R.id.action_cart).actionView.setOnClickListener {
-            Toast.makeText(this, "cart clicked", Toast.LENGTH_LONG).show()
             navController.navigate(R.id.action_nav_home_to_cartFragment)
         }
         return true

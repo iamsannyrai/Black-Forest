@@ -41,6 +41,9 @@ interface BlackForestService {
     @POST("add-to-cart/")
     suspend fun postCartItem(@Body productId: ProductID):Response<BaseResponse<List<CartItem>>>
 
+    @DELETE("add-to-cart/{id}/")
+    suspend fun removeCartItem(@Path("id") id: Int) : Response<BaseResponse<String>>
+
     @WorkerThread
     companion object {
         operator fun invoke(

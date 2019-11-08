@@ -2,7 +2,6 @@ package com.incwell.blackforest.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.widget.NestedScrollView
@@ -16,7 +15,6 @@ import com.google.android.material.card.MaterialCardView
 import com.incwell.blackforest.R
 import com.incwell.blackforest.data.model.Category
 import com.incwell.blackforest.data.model.Product
-import com.incwell.blackforest.data.storage.SharedPref
 import com.incwell.blackforest.ui.category.subCategory.SubCategoryViewModel
 import com.incwell.blackforest.ui.product.ProductActivity
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -47,7 +45,7 @@ class HomeFragment : Fragment(), CategoryRecyclerAdapter.CategoryItemListener,
         shimmerFrameLayout = root.findViewById(R.id.shimmer_layout)
         nestedScrollView = root.findViewById(R.id.nested_scroll_view)
         seeAllCategoryCardView = root.findViewById(R.id.category_viewmore)
-        searchProduct = root.findViewById(R.id.searcview_product)
+        searchProduct = root.findViewById(R.id.searchview_product)
 
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
 

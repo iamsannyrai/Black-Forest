@@ -32,4 +32,6 @@ class CartRepository(private val blackForestService: BlackForestService) {
     }
 
     suspend fun postCartItemToserver(productId: String)=blackForestService.postCartItem(ProductID(productId))
+
+    suspend fun deleteCartItem(productId: Int)=blackForestService.removeCartItem(productId)
 }

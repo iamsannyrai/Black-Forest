@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.incwell.blackforest.data.repository.CartRepository
+import com.incwell.blackforest.data.storage.SharedPref
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,13 +21,24 @@ class CartViewModel(private val cartRepository: CartRepository) : ViewModel() {
         }
     }
 
-    fun addToCartResult(productId:String){
+    fun addToCartResult(productId: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val res = cartRepository.postCartItemToserver(productId)
             if (res.isSuccessful) {
                 _cartResult.postValue("Item added in cart successfully!")
             } else {
                 _cartResult.postValue("Error adding product in cart. Error: ${res.message()}")
+            }
+        }
+    }
+
+    fun removeItemFromCart(productId: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val res = cartRepository.deleteCartItem(productId)
+            if (res.isSuccessful) {
+                _cartResult.postValue("removed")
+            } else {
+                _cartResult.postValue("not removed")
             }
         }
     }
