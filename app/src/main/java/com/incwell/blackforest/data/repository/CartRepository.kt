@@ -7,6 +7,7 @@ import com.incwell.blackforest.LOG_TAG
 import com.incwell.blackforest.data.BlackForestService
 import com.incwell.blackforest.data.model.CartItem
 import com.incwell.blackforest.data.model.ProductID
+import com.incwell.blackforest.data.model.UpdateItem
 import com.incwell.blackforest.data.storage.SharedPref
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,4 +35,6 @@ class CartRepository(private val blackForestService: BlackForestService) {
     suspend fun postCartItemToserver(productId: String)=blackForestService.postCartItem(ProductID(productId))
 
     suspend fun deleteCartItem(productId: Int)=blackForestService.removeCartItem(productId)
+
+    suspend fun updateItemQuantity(updateItem:UpdateItem,cartItemId:Int)=blackForestService.updateItemQuantity(updateItem,cartItemId)
 }

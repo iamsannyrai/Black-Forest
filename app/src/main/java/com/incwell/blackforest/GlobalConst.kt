@@ -9,3 +9,5 @@ const val CART_ITEM="com.incwell.blackfores.cartItem"
 const val WEB_SERVICE_URL = "https://dev.blackforest.incwell.com.np/v1/api/"
 
 val Cities= arrayOf("Kathmandu","Lalitpur","Bhaktapur","Bhojpur","Pokhara","Dharan","Birgunj","Chitwan","Namche")
+
+const val TAX= 0.01

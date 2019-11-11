@@ -27,22 +27,28 @@ interface BlackForestService {
     suspend fun getSearchedProducts(@Query("search-for") tag: String): Response<BaseResponse<List<Search>>>
 
     @POST("google")
-    suspend fun sendGoogleAccessToken(@Body access_token:AccessToken):Response<BaseResponse<AccessToken>>
+    suspend fun sendGoogleAccessToken(@Body access_token: AccessToken): Response<BaseResponse<AccessToken>>
 
     @POST("register/")
-    suspend fun registerUser(@Body user:User):Response<BaseResponse<User>>
+    suspend fun registerUser(@Body user: User): Response<BaseResponse<User>>
 
     @POST("login/")
-    suspend fun signinUser(@Body signIn: SignIn):Response<BaseResponse<SignInResponse>>
+    suspend fun signinUser(@Body signIn: SignIn): Response<BaseResponse<SignInResponse>>
 
     @GET("add-to-cart")
     suspend fun getCartItem(): Response<BaseResponse<List<CartItem>>>
 
     @POST("add-to-cart/")
-    suspend fun postCartItem(@Body productId: ProductID):Response<BaseResponse<List<CartItem>>>
+    suspend fun postCartItem(@Body productId: ProductID): Response<BaseResponse<List<CartItem>>>
 
     @DELETE("add-to-cart/{id}/")
-    suspend fun removeCartItem(@Path("id") id: Int) : Response<BaseResponse<String>>
+    suspend fun removeCartItem(@Path("id") id: Int): Response<BaseResponse<String>>
+
+    @PUT("add-to-cart/{cart-id}/")
+    suspend fun updateItemQuantity(@Body updateItem: UpdateItem, @Path("cart-id") id: Int): Response<BaseResponse<String>>
+
+    @POST("orders/")
+    suspend fun orderProduct(@Body newAddress:NewAddress):Response<BaseResponse<String>>
 
     @WorkerThread
     companion object {

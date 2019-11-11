@@ -44,6 +44,7 @@ class CartRecyclerAdapter(
                 .load(product.main_image)
                 .into(cartItemImage!!)
             cartItemTotalPrice?.let {
+                it.text=""
                 it.text =
                     (product.price.toInt() * holder.itemView.cart_view.getQuantity(cartItem[position])).toString()
             }

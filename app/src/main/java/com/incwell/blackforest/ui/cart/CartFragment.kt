@@ -16,6 +16,8 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
@@ -34,7 +36,7 @@ class CartFragment : Fragment() {
 
     private lateinit var emptyCart: ImageView
     private lateinit var checkoutBtn: MaterialButton
-
+    private lateinit var navController: NavController
     private lateinit var adapter: CartRecyclerAdapter
     private lateinit var trashIcon: Drawable
     private var totalAmount: Double = 0.0
@@ -51,6 +53,7 @@ class CartFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val root = inflater.inflate(R.layout.fragment_cart, container, false)
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
 
         emptyCart = root.iv_empty_cart
         checkoutBtn = root.checkout
@@ -148,6 +151,7 @@ class CartFragment : Fragment() {
 
         root.checkout.setOnClickListener {
             Toast.makeText(context, "$totalAmount", Toast.LENGTH_LONG).show()
+            navController.navigate(R.id.action_cartFragment_to_orderFragment)
         }
 
 

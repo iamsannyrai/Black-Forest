@@ -18,7 +18,9 @@ class CartView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) :
     LinearLayout(context, attrs, defStyleAttr) {
+
     private lateinit var mCartItem: CartItem
+
 
     init {
         init(context)

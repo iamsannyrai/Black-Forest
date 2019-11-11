@@ -26,7 +26,8 @@ class BlackForestApplication : Application() {
                     homeModule,
                     categoryModule,
                     searchModule,
-                    cartModule
+                    cartModule,
+                    orderModule
                 )
             )
         }
