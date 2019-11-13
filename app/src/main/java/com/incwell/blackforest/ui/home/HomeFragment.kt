@@ -15,6 +15,7 @@ import com.google.android.material.card.MaterialCardView
 import com.incwell.blackforest.R
 import com.incwell.blackforest.data.model.Category
 import com.incwell.blackforest.data.model.Product
+import com.incwell.blackforest.data.storage.SharedPref
 import com.incwell.blackforest.ui.category.subCategory.SubCategoryViewModel
 import com.incwell.blackforest.ui.product.ProductActivity
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -65,6 +66,7 @@ class HomeFragment : Fragment(), CategoryRecyclerAdapter.CategoryItemListener,
         seeAllCategoryCardView.setOnClickListener {
             navController.navigate(R.id.action_nav_home_to_categoryFragment)
         }
+
 
         homeViewModel.featuredData.observe(this, Observer {
             val adapter = FeaturedRecyclerAdapter(requireContext(), it, this)

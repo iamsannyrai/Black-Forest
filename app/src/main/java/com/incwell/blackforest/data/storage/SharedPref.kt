@@ -2,12 +2,33 @@ package com.incwell.blackforest.data.storage
 
 import android.util.Log
 import com.incwell.blackforest.CART_ITEM
+import com.incwell.blackforest.CITY
 import com.incwell.blackforest.data.model.CartItem
+import com.incwell.blackforest.data.model.City
 import com.incwell.blackforest.data.model.Product
 import com.orhanobut.hawk.Hawk
 
 interface SharedPref {
     companion object {
+
+        //functions for maintaining cities
+        fun saveCity(city: City) {
+            val cities = getCity()
+            val cityItem = City(city.id, city.city)
+            cities.add(cityItem)
+            Hawk.put(CITY, cities)
+
+        }
+
+        fun getCity(): ArrayList<City> {
+            return if (Hawk.get<ArrayList<City>>(CITY) == null) ArrayList() else Hawk.get<ArrayList<City>>(
+                CITY
+            )
+        }
+
+        fun resetCity() {
+            Hawk.delete(CITY)
+        }
 
         //functions for maintaining user token
         fun saveToken(key: String, token: String) {
@@ -32,9 +53,9 @@ interface SharedPref {
         }
 
         fun getCart(): ArrayList<CartItem> {
-            return if (Hawk.get<ArrayList<CartItem>>(CART_ITEM) != null){
+            return if (Hawk.get<ArrayList<CartItem>>(CART_ITEM) != null) {
                 Hawk.get<ArrayList<CartItem>>(CART_ITEM)
-            }else{
+            } else {
                 ArrayList()
             }
         }
@@ -45,7 +66,7 @@ interface SharedPref {
 
         fun deleteAllCartItem() {
             Hawk.delete(CART_ITEM)
-            Log.d("delete","items removed")
+            Log.d("delete", "items removed")
         }
     }
 }

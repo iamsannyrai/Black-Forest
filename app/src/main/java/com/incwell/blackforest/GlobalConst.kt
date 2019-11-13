@@ -6,8 +6,8 @@ const val tokenKey="com.incwell.blackforest.userToken"
 
 const val CART_ITEM="com.incwell.blackfores.cartItem"
 
-const val WEB_SERVICE_URL = "https://dev.blackforest.incwell.com.np/v1/api/"
+const val CITY="com.incwell.blackforest.city"
 
-val Cities= arrayOf("Kathmandu","Lalitpur","Bhaktapur","Bhojpur","Pokhara","Dharan","Birgunj","Chitwan","Namche")
+const val WEB_SERVICE_URL = "https://dev.blackforest.incwell.com.np/v1/api/"
 
 const val TAX= 0.01

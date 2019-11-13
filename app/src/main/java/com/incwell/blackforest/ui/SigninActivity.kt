@@ -33,12 +33,12 @@ class SigninActivity : AppCompatActivity() {
         setContentView(R.layout.activity_signin)
 
         //checking if token exist in sharedpreference or not
-        authenticationViewModel.sharedPreference()
-        if (authenticationViewModel.isPresent!!) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+//        authenticationViewModel.sharedPreference()
+//        if (authenticationViewModel.isPresent!!) {
+//            val intent = Intent(this, MainActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
 
         login_btn.setOnClickListener { view ->
             when {

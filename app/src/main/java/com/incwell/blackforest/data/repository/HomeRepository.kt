@@ -7,6 +7,7 @@ import com.incwell.blackforest.LOG_TAG
 import com.incwell.blackforest.data.BlackForestService
 import com.incwell.blackforest.data.model.CartItem
 import com.incwell.blackforest.data.model.Category
+import com.incwell.blackforest.data.model.City
 import com.incwell.blackforest.data.model.Product
 import com.incwell.blackforest.data.storage.SharedPref
 import com.incwell.blackforest.util.NoInternetException

@@ -3,6 +3,8 @@ package com.incwell.blackforest.data
 import androidx.annotation.WorkerThread
 import com.incwell.blackforest.WEB_SERVICE_URL
 import com.incwell.blackforest.data.model.*
+import com.incwell.blackforest.tokenKey
+import com.orhanobut.hawk.Hawk
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -29,12 +31,6 @@ interface BlackForestService {
     @POST("google")
     suspend fun sendGoogleAccessToken(@Body access_token: AccessToken): Response<BaseResponse<AccessToken>>
 
-    @POST("register/")
-    suspend fun registerUser(@Body user: User): Response<BaseResponse<User>>
-
-    @POST("login/")
-    suspend fun signinUser(@Body signIn: SignIn): Response<BaseResponse<SignInResponse>>
-
     @GET("add-to-cart")
     suspend fun getCartItem(): Response<BaseResponse<List<CartItem>>>
 
@@ -48,7 +44,7 @@ interface BlackForestService {
     suspend fun updateItemQuantity(@Body updateItem: UpdateItem, @Path("cart-id") id: Int): Response<BaseResponse<String>>
 
     @POST("orders/")
-    suspend fun orderProduct(@Body newAddress:NewAddress):Response<BaseResponse<String>>
+    suspend fun orderProduct(@Body newAddress: NewAddress): Response<BaseResponse<String>>
 
     @WorkerThread
     companion object {

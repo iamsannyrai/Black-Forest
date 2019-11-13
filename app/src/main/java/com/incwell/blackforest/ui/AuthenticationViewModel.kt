@@ -12,7 +12,6 @@ import com.incwell.blackforest.util.NoInternetException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import java.net.SocketTimeoutException
 
 class AuthenticationViewModel(private val authenticationRepository: AuthenticationRepository) :
@@ -36,6 +35,9 @@ class AuthenticationViewModel(private val authenticationRepository: Authenticati
     fun sharedPreference() {
         isPresent = authenticationRepository.checkCredential(tokenKey)
     }
+
+
+    suspend fun getCities() = authenticationRepository.getCities()
 
     fun registerUser(
         mUsername: String,

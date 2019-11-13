@@ -1,31 +1,24 @@
 package com.incwell.blackforest
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
-import com.incwell.blackforest.data.model.CartItem
 import com.incwell.blackforest.data.storage.SharedPref
 import com.incwell.blackforest.ui.AuthenticationViewModel
-import com.incwell.blackforest.ui.SigninActivity
 import com.incwell.blackforest.ui.cart.CartViewModel
 import com.incwell.blackforest.ui.category.subCategory.SubCategoryViewModel
 import com.incwell.blackforest.ui.home.HomeViewModel
-import com.incwell.blackforest.ui.product.ProductActivity
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
@@ -76,18 +69,23 @@ class MainActivity : AppCompatActivity() {
         menu.findItem(R.id.action_cart).actionView.setOnClickListener {
             navController.navigate(R.id.action_nav_home_to_cartFragment)
         }
+
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment)
         when (item.itemId) {
-            R.id.action_logout -> {
-                authenticationViewModel.onLogoutButtonClicked()
-                val intent = Intent(this, SigninActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-                finish()
+            R.id.action_account ->{
+                navController.navigate(R.id.action_nav_home_to_accountFragment)
             }
+//            R.id.action_logout -> {
+//                authenticationViewModel.onLogoutButtonClicked()
+//                val intent = Intent(this, SigninActivity::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                startActivity(intent)
+//                finish()
+//            }
         }
         return super.onOptionsItemSelected(item)
     }
