@@ -147,8 +147,6 @@ class CartFragment : Fragment() {
 
         getTotalAmount()
 
-        root.checkout.text = "Total amount Rs $totalAmount"
-
         root.checkout.setOnClickListener {
             Toast.makeText(context, "$totalAmount", Toast.LENGTH_LONG).show()
             navController.navigate(R.id.action_cartFragment_to_orderFragment)

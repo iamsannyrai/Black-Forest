@@ -72,10 +72,10 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/accountFullName"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:focusableInTouchMode="false"
-                                android:text="Incwell_Admin" />
+                                android:focusableInTouchMode="false" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -91,10 +91,10 @@
                             app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/accountUserName"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:focusableInTouchMode="false"
-                                android:text="incwell_admin"/>
+                                android:focusableInTouchMode="false" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,22 +111,20 @@
                             app:layout_constraintTop_toBottomOf="@+id/til_account_user_name">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/accountEmail"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:focusableInTouchMode="false"
-                                android:inputType="textEmailAddress"
-                                android:text="saijalshakya@gmail.com"/>
+                                android:inputType="textEmailAddress" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/til_account_phone"
+                            android:id="@+id/til_accountPhone"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:hint="Phone Number"
-                            android:clickable="false"
-                            android:focusable="false"
                             app:endIconDrawable="@drawable/ic_edit"
                             app:endIconMode="custom"
                             app:layout_constraintEnd_toEndOf="@+id/til_account_email"
@@ -134,11 +132,12 @@
                             app:layout_constraintTop_toBottomOf="@+id/til_account_email">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/accountPhoneNumber"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:focusableInTouchMode="false"
                                 android:inputType="phone"
-                                android:text="9843935344"/>
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -152,16 +151,17 @@
                             android:focusable="false"
                             app:endIconDrawable="@drawable/ic_edit"
                             app:endIconMode="custom"
-                            app:layout_constraintEnd_toEndOf="@+id/til_account_phone"
-                            app:layout_constraintStart_toStartOf="@+id/til_account_phone"
-                            app:layout_constraintTop_toBottomOf="@+id/til_account_phone">
+                            app:layout_constraintEnd_toEndOf="@+id/til_accountPhone"
+                            app:layout_constraintStart_toStartOf="@+id/til_accountPhone"
+                            app:layout_constraintTop_toBottomOf="@+id/til_accountPhone">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/accountPassword"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:inputType="textPassword"
                                 android:focusableInTouchMode="false"
-                                android:text="9843935344"/>
+                                android:text="*********"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -178,10 +178,10 @@
                             app:layout_constraintTop_toBottomOf="@+id/til_account_password">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/accountJoinedDate"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:focusableInTouchMode="false"
-                                android:text="2019-09-19 14:34PM"/>
+                                android:focusableInTouchMode="false" />
 
                         </com.google.android.material.textfield.TextInputLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -190,8 +190,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
-
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_delivery_address"
@@ -241,7 +239,7 @@
                         android:layout_marginBottom="8dp">
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/til_account_city"
+                            android:id="@+id/til_accountCity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
@@ -256,14 +254,14 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/accountCity"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:focusableInTouchMode="false"
-                                android:text="Kathmandu" />
+                                android:focusableInTouchMode="false" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/til_account_address"
+                            android:id="@+id/til_accountAddress"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
@@ -272,15 +270,15 @@
                             android:focusable="false"
                             app:endIconMode="custom"
                             app:endIconDrawable="@drawable/ic_edit"
-                            app:layout_constraintEnd_toEndOf="@+id/til_account_city"
-                            app:layout_constraintStart_toStartOf="@+id/til_account_city"
-                            app:layout_constraintTop_toBottomOf="@+id/til_account_city">
+                            app:layout_constraintEnd_toEndOf="@+id/til_accountCity"
+                            app:layout_constraintStart_toStartOf="@+id/til_accountCity"
+                            app:layout_constraintTop_toBottomOf="@+id/til_accountCity">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/accountAddress"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:focusableInTouchMode="false"
-                                android:text="Lalitpur"/>
+                                android:focusableInTouchMode="false"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 

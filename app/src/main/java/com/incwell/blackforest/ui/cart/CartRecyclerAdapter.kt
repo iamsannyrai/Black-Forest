@@ -43,11 +43,6 @@ class CartRecyclerAdapter(
             Glide.with(context)
                 .load(product.main_image)
                 .into(cartItemImage!!)
-            cartItemTotalPrice?.let {
-                it.text=""
-                it.text =
-                    (product.price.toInt() * holder.itemView.cart_view.getQuantity(cartItem[position])).toString()
-            }
         }
         holder.itemView.cart_view.setData(cartItem[position])
     }
@@ -68,7 +63,6 @@ class CartRecyclerAdapter(
         val cartItemImage: ImageView? = itemView.findViewById(R.id.cartItemImage)
         val cartItemName: TextView? = itemView.findViewById(R.id.cartItemName)
         val cartItemPrice: TextView? = itemView.findViewById(R.id.cartItemPrice)
-        val cartItemTotalPrice: TextView? = itemView.findViewById(R.id.itemTotalPrice)
     }
 }
 

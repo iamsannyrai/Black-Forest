@@ -3,6 +3,7 @@ package com.incwell.blackforest.ui.category.subCategory
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,11 @@ class SubCategoryFragment : Fragment() {
     private val subCategoryViewModel: SubCategoryViewModel by sharedViewModel()
 
     private lateinit var subCategoryRecyclerView: RecyclerView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +50,11 @@ class SubCategoryFragment : Fragment() {
         })
 
         return root
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.clear()
     }
 
 }

@@ -3,6 +3,7 @@ package com.incwell.blackforest.ui.category
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -25,6 +26,11 @@ class CategoryFragment : Fragment(), CategoryRecyclerAdapter.CategoryItemListene
     private lateinit var allCategoryRecyclerView: RecyclerView
     private lateinit var navController: NavController
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,6 +51,11 @@ class CategoryFragment : Fragment(), CategoryRecyclerAdapter.CategoryItemListene
     override fun onCategoryItemClick(category: Category) {
         subCategoryViewModel.selectedCategory.value = category
         navController.navigate(R.id.action_categoryFragment_to_subCategoryFragment)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.clear()
     }
 
 

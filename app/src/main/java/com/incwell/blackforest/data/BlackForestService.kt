@@ -13,6 +13,7 @@ import retrofit2.http.*
 
 interface BlackForestService {
 
+    //home section
     @GET("category/")
     suspend fun getCategories(): Response<BaseResponse<List<Category>>>
 
@@ -31,6 +32,8 @@ interface BlackForestService {
     @POST("google")
     suspend fun sendGoogleAccessToken(@Body access_token: AccessToken): Response<BaseResponse<AccessToken>>
 
+
+    //cart and order section
     @GET("add-to-cart")
     suspend fun getCartItem(): Response<BaseResponse<List<CartItem>>>
 
@@ -45,6 +48,27 @@ interface BlackForestService {
 
     @POST("orders/")
     suspend fun orderProduct(@Body newAddress: NewAddress): Response<BaseResponse<String>>
+
+
+    //account section
+    @GET("profile")
+    suspend fun getProfile(): Response<BaseResponse<Profile>>
+
+    @PUT("change-phone-number")
+    suspend fun changePhoneNumber(@Body newPhoneNumber: PhoneNumber): Response<BaseResponse<String>>
+
+    @PUT("password-change")
+    suspend fun changePassword(@Body newPassword: NewPassword): Response<BaseResponse<String>>
+
+    @GET("get-user")
+    suspend fun getAddress(): Response<BaseResponse<CompleteProfile>>
+
+    @PUT("change-city")
+    suspend fun changeCity(@Body newCity: NewCity): Response<BaseResponse<String>>
+
+    @PUT("change-address")
+    suspend fun changeAddress(@Body newAddress:Address):Response<BaseResponse<String>>
+
 
     @WorkerThread
     companion object {

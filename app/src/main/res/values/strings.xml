@@ -14,7 +14,6 @@
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="accessToken">147134865650-t5rdmdtjtv47ofj12689gj5fr8tass4d.apps.googleusercontent.com</string>

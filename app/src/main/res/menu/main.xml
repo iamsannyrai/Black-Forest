@@ -10,9 +10,7 @@
 
     <item
         android:id="@+id/action_account"
-        android:icon="@drawable/ic_man_user"
-        android:title="Account"
-        app:showAsAction="ifRoom" />
+        android:title="Account"/>
 
     <item
         android:id="@+id/action_logout"

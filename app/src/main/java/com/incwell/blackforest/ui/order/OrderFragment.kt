@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
@@ -18,6 +19,8 @@ import com.incwell.blackforest.TAX
 import com.incwell.blackforest.data.model.NewAddress
 import com.incwell.blackforest.data.storage.SharedPref
 import com.incwell.blackforest.ui.home.FeaturedRecyclerAdapter
+import com.incwell.blackforest.util.dropDown
+import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.android.synthetic.main.fragment_order.*
 import kotlinx.android.synthetic.main.fragment_order.view.*
 import org.koin.android.ext.android.inject
@@ -25,9 +28,16 @@ import org.koin.android.ext.android.inject
 class OrderFragment : Fragment() {
 
     private val orderViewModel: OrderViewModel by inject()
+    private lateinit var myCity: HashMap<String, Int>
     private lateinit var orderRecyclerView: RecyclerView
     private lateinit var navController: NavController
     private var subtotal: Double = 0.0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,6 +53,14 @@ class OrderFragment : Fragment() {
         root.subTotal.text = getSubTotalAmount().toString()
         root.tax.text = calculateTax().toString()
         root.orderTotal.text = calculateTotal().toString()
+
+
+        myCity = HashMap()
+        for (i in 0 until SharedPref.getCity().size) {
+            Log.d("cities1", "${SharedPref.getCity()[i]}")
+            myCity[SharedPref.getCity()[i].city] = SharedPref.getCity()[i].id
+        }
+        dropDown(context!!, myCity.keys.toTypedArray(), root.other_city)
 
         val checkbox = root.otherLocation
         checkbox.setOnCheckedChangeListener { _, isChecked ->
@@ -61,7 +79,7 @@ class OrderFragment : Fragment() {
                 1,
                 checkbox.isChecked,
                 root.other_phone_number.text.toString(),
-                root.other_city.text.toString(),
+                "${myCity[root.other_city.text.toString()]!!}",
                 root.other_address.text.toString()
             )
             orderViewModel.orderProduct(newAddress)
@@ -86,6 +104,11 @@ class OrderFragment : Fragment() {
         }
 
         return root
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.clear()
     }
 
     private fun getSubTotalAmount(): Double {
