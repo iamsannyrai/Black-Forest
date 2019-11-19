@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.toColor
 import androidx.lifecycle.Observer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -76,6 +75,11 @@ class SigninActivity : AppCompatActivity() {
 
         register_btn.setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
+            startActivity(intent)
+        }
+
+        forgot_btn.setOnClickListener {
+            val intent = Intent(this, PasswordResetActivity::class.java)
             startActivity(intent)
         }
 

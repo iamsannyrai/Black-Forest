@@ -94,6 +94,8 @@ class AccountFragment : Fragment() {
             openDialogToChangeAddress(root)
         }
 
+//        accountViewModel.getHistory()
+
         return root
     }
 

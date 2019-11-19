@@ -20,4 +20,6 @@ class AccountRepository(private val blackForestService: BlackForestService) {
 
     suspend fun changeAddress(newAddress: Address)=blackForestService.changeAddress(newAddress)
 
+    suspend fun getOrderHistory() = blackForestService.getOrderHistory()
+
 }

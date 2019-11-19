@@ -9,6 +9,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface AuthenticationService {
 
@@ -20,6 +21,15 @@ interface AuthenticationService {
 
     @POST("login/")
     suspend fun signinUser(@Body signIn: SignIn): Response<BaseResponse<SignInResponse>>
+
+    @POST("password-reset/")
+    suspend fun resetPassword(@Body email: Email): Response<BaseResponse<Email>>
+
+    @GET("reset/{link}")
+    suspend fun getlinkFromUri(@Path("link") link: String): Response<BaseResponse<Id>>
+
+    @POST("password-reset-done/{id}")
+    suspend fun resetPasswordDone(@Body resetPassword: ResetPassword, @Path("id") id: Int): Response<BaseResponse<String>>
 
     companion object {
         operator fun invoke(networkStatusInterceptor: NetworkStatusInterceptor): AuthenticationService {

@@ -10,4 +10,6 @@ const val CITY="com.incwell.blackforest.city"
 
 const val WEB_SERVICE_URL = "https://dev.blackforest.incwell.com.np/v1/api/"
 
+const val WEB_SERVICE_URL_HTTP = "http://dev.blackforest.incwell.com.np/v1/api"
+
 const val TAX= 0.01

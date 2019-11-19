@@ -89,4 +89,15 @@ class AccountViewModel(private val accountRepository: AccountRepository) : ViewM
             }
         }
     }
+
+    fun getHistory(){
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = accountRepository.getOrderHistory()
+            if(response.isSuccessful){
+                Log.d("order-history","${response.body()!!.data}")
+            }else{
+                Log.d("order-history","${response}")
+            }
+        }
+    }
 }

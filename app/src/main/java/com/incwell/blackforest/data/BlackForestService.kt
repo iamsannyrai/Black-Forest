@@ -69,6 +69,9 @@ interface BlackForestService {
     @PUT("change-address")
     suspend fun changeAddress(@Body newAddress:Address):Response<BaseResponse<String>>
 
+    @GET("history")
+    suspend fun getOrderHistory():Response<BaseResponse<String>>
+
 
     @WorkerThread
     companion object {

@@ -31,6 +31,10 @@ class AuthenticationViewModel(private val authenticationRepository: Authenticati
     val messageResponse: LiveData<String>
         get() = _messageResponse
 
+    private val _userId = MutableLiveData<Int>()
+    val userId: LiveData<Int>
+        get() = _userId
+
 
     fun sharedPreference() {
         isPresent = authenticationRepository.checkCredential(tokenKey)
@@ -92,5 +96,53 @@ class AuthenticationViewModel(private val authenticationRepository: Authenticati
 
     fun onLogoutButtonClicked() {
         authenticationRepository.deleteCredential(tokenKey)
+    }
+
+    fun resetPassword(email: String) {
+        val emailAdd = Email(email = email)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = authenticationRepository.resetPassword(emailAdd)
+                if (response.isSuccessful) {
+                    _messageResponse.postValue("Email has been sent for password reset! Please check your email.")
+                } else {
+                    _messageResponse.postValue("Something went wrong!")
+                }
+            } catch (e: NoInternetException) {
+
+            }
+        }
+    }
+
+    fun getLink(link: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = authenticationRepository.getLink(link)
+                if (response.isSuccessful) {
+                    _userId.postValue(response.body()!!.data!!.id)
+                } else {
+                    Log.d("data-link", "${response}")
+                }
+            } catch (e: NoInternetException) {
+
+            }
+        }
+    }
+
+    fun changePassword(newPassword: String, confirmPassword: String, id: Int) {
+        val resetPassword =
+            ResetPassword(new_password = newPassword, confirm_password = confirmPassword)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = authenticationRepository.changePassword(resetPassword, id)
+                if (response.isSuccessful) {
+                    _messageResponse.postValue("Password reset successfully")
+                } else {
+                    _messageResponse.postValue("Sorry your password couldn't be reset!")
+                }
+            } catch (e: NoInternetException) {
+
+            }
+        }
     }
 }
