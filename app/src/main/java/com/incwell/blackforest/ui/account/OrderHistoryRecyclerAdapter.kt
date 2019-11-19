@@ -1,22 +1,58 @@
 package com.incwell.blackforest.ui.account
 
+import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.incwell.blackforest.R
+import com.incwell.blackforest.data.model.History
 
-class OrderHistoryRecyclerAdapter() : RecyclerView.Adapter<OrderHistoryRecyclerAdapter.ViewHolder>() {
+class OrderHistoryRecyclerAdapter(
+    val context: Context,
+    private val orderList: List<History>
+) : RecyclerView.Adapter<OrderHistoryRecyclerAdapter.ViewHolder>() {
+    private lateinit var view: View
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val inflater = LayoutInflater.from(parent.context)
+
+        view = inflater.inflate(R.layout.order_history_list_item, parent, false)
+        return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getItemCount(): Int = orderList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val orderHistory = orderList[position]
+        with(holder) {
 
+            for (i in orderHistory.product.indices) {
+                productName?.let {
+                    it.text = orderHistory.product[i].product
+                }
+                qty?.let {
+                    it.text = orderHistory.product[i].quantity.toString()
+                }
+            }
+            orderCity?.let {
+                it.text = orderHistory.common.city
+            }
+            orderAddress?.let {
+                it.text = orderHistory.common.address
+            }
+            subTotal?.let {
+                it.text = "Sub Total: Rs. ${orderHistory.common.sub_total}"
+            }
+            tax?.let {
+                it.text = "Tax: Rs. ${orderHistory.common.total_tax}"
+            }
+            grandTotal?.let {
+                it.text = "Grand Total: Rs. ${orderHistory.common.grand_total}"
+            }
+
+        }
     }
 
 

@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.ProgressBar
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import com.google.android.material.button.MaterialButton
@@ -31,6 +32,7 @@ class AccountFragment : Fragment() {
     private val accountViewModel: AccountViewModel by viewModel()
 
     private lateinit var myCity: HashMap<String, Int>
+    private lateinit var orderRecyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +45,8 @@ class AccountFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val root = inflater.inflate(R.layout.fragment_account, container, false)
+
+        orderRecyclerView = root.rv_order_history
 
         accountViewModel.getProfile()
         accountViewModel.profile.observe(this, Observer {
@@ -86,6 +90,16 @@ class AccountFragment : Fragment() {
             }
         }
 
+        root.iv_show_hide3.setOnClickListener {
+            if (root.cv_order_history_content.visibility == View.GONE) {
+                TransitionManager.beginDelayedTransition(root.cv_order_history, AutoTransition())
+                root.cv_order_history_content.visibility = View.VISIBLE
+            } else {
+                TransitionManager.beginDelayedTransition(root.cv_order_history, AutoTransition())
+                root.cv_order_history_content.visibility = View.GONE
+            }
+        }
+
         root.accountCity.setOnClickListener {
             openDialogToChangeCity(root)
         }
@@ -94,7 +108,11 @@ class AccountFragment : Fragment() {
             openDialogToChangeAddress(root)
         }
 
-//        accountViewModel.getHistory()
+        accountViewModel.getHistory()
+        accountViewModel.orderHistory.observe(this, Observer {
+            val adapter = OrderHistoryRecyclerAdapter(requireContext(), it!!)
+            orderRecyclerView.adapter = adapter
+        })
 
         return root
     }

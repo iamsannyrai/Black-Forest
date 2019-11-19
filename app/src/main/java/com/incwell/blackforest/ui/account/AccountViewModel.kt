@@ -24,6 +24,10 @@ class AccountViewModel(private val accountRepository: AccountRepository) : ViewM
     val address: LiveData<CompleteProfile>
         get() = _address
 
+    private val _orderHistory = MutableLiveData<List<History>?>()
+    val orderHistory: LiveData<List<History>?>
+        get() = _orderHistory
+
     fun getProfile() {
         CoroutineScope(Dispatchers.IO).launch {
             val response = accountRepository.getProfile()
@@ -79,7 +83,7 @@ class AccountViewModel(private val accountRepository: AccountRepository) : ViewM
         }
     }
 
-    fun changeAddress(address: Address){
+    fun changeAddress(address: Address) {
         CoroutineScope(Dispatchers.IO).launch {
             val response = accountRepository.changeAddress(address)
             if (response.isSuccessful) {
@@ -90,13 +94,14 @@ class AccountViewModel(private val accountRepository: AccountRepository) : ViewM
         }
     }
 
-    fun getHistory(){
+    fun getHistory() {
         CoroutineScope(Dispatchers.IO).launch {
             val response = accountRepository.getOrderHistory()
-            if(response.isSuccessful){
-                Log.d("order-history","${response.body()!!.data}")
-            }else{
-                Log.d("order-history","${response}")
+            if (response.isSuccessful) {
+                _orderHistory.postValue(response.body()!!.data)
+                Log.d("order-history", "${response.body()!!.data}")
+            } else {
+                Log.d("order-history", "${response}")
             }
         }
     }

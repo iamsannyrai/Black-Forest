@@ -10,6 +10,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
+import java.util.*
 
 interface BlackForestService {
 
@@ -67,10 +68,10 @@ interface BlackForestService {
     suspend fun changeCity(@Body newCity: NewCity): Response<BaseResponse<String>>
 
     @PUT("change-address")
-    suspend fun changeAddress(@Body newAddress:Address):Response<BaseResponse<String>>
+    suspend fun changeAddress(@Body newAddress: Address): Response<BaseResponse<String>>
 
     @GET("history")
-    suspend fun getOrderHistory():Response<BaseResponse<String>>
+    suspend fun getOrderHistory(): Response<BaseResponse<List<History>>>
 
 
     @WorkerThread
