@@ -27,5 +27,9 @@ fun dropDown(context: Context, objects: Array<String>, id: AutoCompleteTextView)
     id.setAdapter(ArrayAdapter(context, R.layout.dropdown_menu_pop_item, objects))
 }
 
+fun handleEmptyError(id: TextInputLayout) {
+    id.error = "This field is empty!"
+    id.requestFocus()
+}
 
 

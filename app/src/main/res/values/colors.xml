@@ -3,8 +3,9 @@
     <color name="colorPrimary">#3DA854</color>
     <color name="colorPrimaryDark">#007828</color>
     <color name="colorAccent">#eb5230</color>
+    <color name="colorTitle">#003311</color>
+    <color name="colorText">#808080</color>
 
     <color name="placeholder_bg">#dddddd</color>
-
     <color name="badge_background_color">@color/colorAccent</color>
 </resources>

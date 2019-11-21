@@ -25,8 +25,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="Chocolate Truffle"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_searchedItem"
+            android:textColor="@color/colorAccent"
             app:layout_constraintStart_toEndOf="@+id/iv_searchedItem"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

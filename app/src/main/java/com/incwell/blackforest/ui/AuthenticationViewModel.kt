@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.incwell.blackforest.LOG_TAG
 import com.incwell.blackforest.data.model.*
 import com.incwell.blackforest.data.repository.AuthenticationRepository
@@ -19,13 +20,9 @@ class AuthenticationViewModel(private val authenticationRepository: Authenticati
 
     var isPresent: Boolean? = false
 
-    private val _loginResponse = MutableLiveData<SignInResponse>()
-    val loginResponse: LiveData<SignInResponse>
-        get() = _loginResponse
-
-    private val _signupResponse = MutableLiveData<User>()
-    val signupResponse: LiveData<User>
-        get() = _signupResponse
+    private val _status = MutableLiveData<Boolean>()
+    val status: LiveData<Boolean>
+        get() = _status
 
     private val _messageResponse = MutableLiveData<String>()
     val messageResponse: LiveData<String>
@@ -35,11 +32,9 @@ class AuthenticationViewModel(private val authenticationRepository: Authenticati
     val userId: LiveData<Int>
         get() = _userId
 
-
     fun sharedPreference() {
         isPresent = authenticationRepository.checkCredential(tokenKey)
     }
-
 
     suspend fun getCities() = authenticationRepository.getCities()
 
@@ -60,9 +55,9 @@ class AuthenticationViewModel(private val authenticationRepository: Authenticati
             try {
                 val response = authenticationRepository.registerUser(newUser)
                 if (response.isSuccessful) {
-                    _signupResponse.postValue(response.body()!!.data)
+                    _status.postValue(true)
                 } else {
-                    _messageResponse.postValue("Something went wrong!")
+                    _status.postValue(false)
                 }
             } catch (e: NoInternetException) {
                 _messageResponse.postValue(e.message)
@@ -82,9 +77,9 @@ class AuthenticationViewModel(private val authenticationRepository: Authenticati
                         tokenKey,
                         signInResponse.body()!!.data!!.token
                     )
-                    _loginResponse.postValue(signInResponse.body()!!.data)
+                    _status.postValue(true)
                 } else {
-                    _messageResponse.postValue("Invalid credentials!")
+                    _status.postValue(false)
                 }
             } catch (e: NoInternetException) {
                 _messageResponse.postValue(e.message)
@@ -109,7 +104,9 @@ class AuthenticationViewModel(private val authenticationRepository: Authenticati
                     _messageResponse.postValue("Something went wrong!")
                 }
             } catch (e: NoInternetException) {
-
+                _messageResponse.postValue(e.message)
+            } catch (e: SocketTimeoutException) {
+                _messageResponse.postValue(e.message)
             }
         }
     }
@@ -124,7 +121,9 @@ class AuthenticationViewModel(private val authenticationRepository: Authenticati
                     Log.d("data-link", "${response}")
                 }
             } catch (e: NoInternetException) {
-
+                _messageResponse.postValue(e.message)
+            } catch (e: SocketTimeoutException) {
+                _messageResponse.postValue(e.message)
             }
         }
     }
@@ -141,7 +140,9 @@ class AuthenticationViewModel(private val authenticationRepository: Authenticati
                     _messageResponse.postValue("Sorry your password couldn't be reset!")
                 }
             } catch (e: NoInternetException) {
-
+                _messageResponse.postValue(e.message)
+            } catch (e: SocketTimeoutException) {
+                _messageResponse.postValue(e.message)
             }
         }
     }

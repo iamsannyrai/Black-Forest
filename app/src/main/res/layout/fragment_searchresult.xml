@@ -35,12 +35,13 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        style="@style/TextAppearance.AppCompat.Title"
         android:id="@+id/textView4"
+        style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
+        android:textColor="@color/colorTitle"
         android:text="You May Also Like"
         app:layout_constraintBottom_toTopOf="@+id/rv_suggestion"
         app:layout_constraintStart_toStartOf="parent" />

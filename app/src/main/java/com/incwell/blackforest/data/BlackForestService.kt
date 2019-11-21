@@ -3,14 +3,11 @@ package com.incwell.blackforest.data
 import androidx.annotation.WorkerThread
 import com.incwell.blackforest.WEB_SERVICE_URL
 import com.incwell.blackforest.data.model.*
-import com.incwell.blackforest.tokenKey
-import com.orhanobut.hawk.Hawk
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
-import java.util.*
 
 interface BlackForestService {
 
@@ -22,10 +19,10 @@ interface BlackForestService {
     suspend fun getFeaturedProduct(): Response<BaseResponse<List<Product>>>
 
     @GET("category/{id}")
-    suspend fun getSubcategories(@Path("id") id: Int): Response<BaseResponse<List<SubCategory>>>
+    suspend fun getSubcategories(@Path("id") id: Int): Response<BaseResponse<List<CategoryItem>>>
 
     @GET("sub-category/{id}")
-    suspend fun getSubcategoyProducts(@Path("id") id: Int): Response<BaseResponse<List<Product>>>
+    suspend fun getSubcategoyProducts(@Path("id") id: Int): Response<BaseResponse<List<SubCategoryItem>>>
 
     @GET("search")
     suspend fun getSearchedProducts(@Query("search-for") tag: String): Response<BaseResponse<List<Search>>>
@@ -33,6 +30,10 @@ interface BlackForestService {
     @POST("google")
     suspend fun sendGoogleAccessToken(@Body access_token: AccessToken): Response<BaseResponse<AccessToken>>
 
+
+    //product activity
+    @GET("product/{id}")
+    suspend fun getIndividualProduct(@Path("id") id:Int):Response<BaseResponse<Product>>
 
     //cart and order section
     @GET("add-to-cart")

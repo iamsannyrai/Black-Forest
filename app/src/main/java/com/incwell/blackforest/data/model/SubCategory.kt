@@ -1,8 +1,9 @@
 package com.incwell.blackforest.data.model
 
 data class SubCategory(
-    var image: String,
-    var sub_category: String,
-    var id: Int,
-    var products: List<SubCategoryProduct>
+    val name: String,
+    var items: List<SubCategoryItem>,
+    val id: Int,
+    val sub_category_image: String,
+    var status: Boolean
 )

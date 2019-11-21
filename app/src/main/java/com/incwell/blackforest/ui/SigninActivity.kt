@@ -12,12 +12,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputLayout
 import com.incwell.blackforest.LOG_TAG
 import com.incwell.blackforest.MainActivity
 import com.incwell.blackforest.R
+import com.incwell.blackforest.util.handleEmptyError
 import com.incwell.blackforest.util.hideErrorHint
+import com.incwell.blackforest.util.showSnackbar
 import kotlinx.android.synthetic.main.activity_signin.*
 import org.koin.android.ext.android.inject
 
@@ -44,19 +44,20 @@ class SigninActivity : AppCompatActivity() {
                 else -> {
                     progressBar.visibility = View.VISIBLE
                     authenticationViewModel.signIn(
-                        signin_username.text.toString(),
-                        signin_password.text.toString()
+                        signin_username.text.toString().split(" ")[0],
+                        signin_password.text.toString().split(" ")[0]
                     )
-                    authenticationViewModel.loginResponse.observe(this, Observer {
-                        progressBar.visibility = View.GONE
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    })
 
-                    authenticationViewModel.messageResponse.observe(this, Observer {
-                        progressBar.visibility = View.GONE
-                        Snackbar.make(view, it, Snackbar.LENGTH_SHORT).show()
+                    authenticationViewModel.status.observe(this, Observer {
+                        progressBar.visibility=View.GONE
+                        if(it){
+                            val intent = Intent(this,MainActivity::class.java)
+                            startActivity(intent)
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
+                            finish()
+                        }else{
+                            showSnackbar(view,"Invalid Credentials.")
+                        }
                     })
                 }
             }
@@ -76,13 +77,14 @@ class SigninActivity : AppCompatActivity() {
         register_btn.setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
         }
 
         forgot_btn.setOnClickListener {
             val intent = Intent(this, PasswordResetActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
         }
-
         hideError()
     }
 
@@ -93,7 +95,7 @@ class SigninActivity : AppCompatActivity() {
 
     private fun signOut(view: View) {
         googleSignInClient.signOut().addOnCompleteListener {
-            Snackbar.make(view, "Signout successfully", Snackbar.LENGTH_LONG).show()
+            showSnackbar(view,"Signout successfully")
         }
     }
 
@@ -124,11 +126,6 @@ class SigninActivity : AppCompatActivity() {
         } catch (e: ApiException) {
             Log.i(LOG_TAG, "signInResult:failed code=" + e.statusCode)
         }
-    }
-
-    private fun handleEmptyError(id: TextInputLayout) {
-        id.error = "This field is empty!"
-        id.requestFocus()
     }
 
     private fun hideError() {

@@ -11,13 +11,13 @@ import com.bumptech.glide.Glide
 import com.incwell.blackforest.R
 import com.incwell.blackforest.data.model.Category
 
-class CategoryRecyclerAdapter(
+class HomeCategoryRecyclerAdapter(
     val context: Context,
     var isFromHome:Boolean,
     val categories: List<Category>,
-    val itemListener: CategoryItemListener
+    val itemListenerHome: HomeCategoryItemListener
 ) :
-    RecyclerView.Adapter<CategoryRecyclerAdapter.ViewHolder>() {
+    RecyclerView.Adapter<HomeCategoryRecyclerAdapter.ViewHolder>() {
 
     private lateinit var view: View
 
@@ -45,7 +45,7 @@ class CategoryRecyclerAdapter(
                 .into(categoryImage!!)
 
             itemView.setOnClickListener {
-                itemListener.onCategoryItemClick(category)
+                itemListenerHome.onHomeCategoryItemClick(category)
             }
         }
     }
@@ -55,7 +55,7 @@ class CategoryRecyclerAdapter(
         val categoryName: TextView? = itemView.findViewById(R.id.tv_categoryName)
     }
 
-    interface CategoryItemListener {
-        fun onCategoryItemClick(category: Category)
+    interface HomeCategoryItemListener {
+        fun onHomeCategoryItemClick(category: Category)
     }
 }

@@ -30,7 +30,8 @@ class BlackForestApplication : Application() {
                     searchModule,
                     cartModule,
                     orderModule,
-                    accountModule
+                    accountModule,
+                    productModule
                 )
             )
         }

@@ -1,9 +1,9 @@
 package com.incwell.blackforest.data.model
 
-data class SubCategoryProduct(
-    var price: String,
+data class SubCategoryItem(
     var name: String,
-    val id: Int,
     var description: String,
+    val id: Int,
+    var price: String,
     var image: String
 )

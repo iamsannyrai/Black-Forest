@@ -11,11 +11,8 @@
         android:label="Black Forest"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_nav_home_to_subCategoryFragment"
-            app:destination="@id/subCategoryFragment" />
-        <action
-            android:id="@+id/action_nav_home_to_categoryFragment"
-            app:destination="@id/categoryFragment" />
+            android:id="@+id/action_nav_home_to_allCategoryFragment"
+            app:destination="@id/allCategoryFragment" />
         <action
             android:id="@+id/action_nav_home_to_searchresultFragment"
             app:destination="@id/searchresultFragment" />
@@ -29,6 +26,9 @@
         <action
             android:id="@+id/action_nav_home_to_accountFragment"
             app:destination="@id/accountFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
     </fragment>
 
     <fragment
@@ -54,13 +54,13 @@
         android:label="Sub Categories"
         tools:layout="@layout/fragment_subcategory" />
     <fragment
-        android:id="@+id/categoryFragment"
-        android:name="com.incwell.blackforest.ui.category.CategoryFragment"
+        android:id="@+id/allCategoryFragment"
+        android:name="com.incwell.blackforest.ui.category.AllHomeCategoryFragment"
         android:label="All Categories"
-        tools:layout="@layout/fragment_category" >
+        tools:layout="@layout/fragment_all_category" >
         <action
-            android:id="@+id/action_categoryFragment_to_subCategoryFragment"
-            app:destination="@id/subCategoryFragment" />
+            android:id="@+id/action_categoryFragment_to_CategoryFragment"
+            app:destination="@id/categoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchresultFragment"
@@ -94,5 +94,14 @@
         android:name="com.incwell.blackforest.ui.account.AccountFragment"
         android:label="Account"
         tools:layout="@layout/fragment_account" />
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.incwell.blackforest.ui.category.CategoryFragment"
+        android:label="Category"
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_categoryFragment_to_subCategoryFragment"
+            app:destination="@id/subCategoryFragment" />
+    </fragment>
 
 </navigation>

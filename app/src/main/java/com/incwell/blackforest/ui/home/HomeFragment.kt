@@ -15,17 +15,16 @@ import com.google.android.material.card.MaterialCardView
 import com.incwell.blackforest.R
 import com.incwell.blackforest.data.model.Category
 import com.incwell.blackforest.data.model.Product
-import com.incwell.blackforest.data.storage.SharedPref
-import com.incwell.blackforest.ui.category.subCategory.SubCategoryViewModel
+import com.incwell.blackforest.ui.category.CategoryViewModel
 import com.incwell.blackforest.ui.product.ProductActivity
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
-class HomeFragment : Fragment(), CategoryRecyclerAdapter.CategoryItemListener,
+class HomeFragment : Fragment(), HomeCategoryRecyclerAdapter.HomeCategoryItemListener,
     FeaturedRecyclerAdapter.FeaturedItemListener {
 
     private val homeViewModel: HomeViewModel by sharedViewModel()
-    private val subCategoryViewModel: SubCategoryViewModel by sharedViewModel()
+    private val categoryViewModel: CategoryViewModel by sharedViewModel()
 
     private lateinit var featuredRecyclerView: RecyclerView
     private lateinit var categoryRecyclerView: RecyclerView
@@ -55,6 +54,7 @@ class HomeFragment : Fragment(), CategoryRecyclerAdapter.CategoryItemListener,
                 val searchBundle = Bundle()
                 searchBundle.putString("searchTag", query)
                 navController.navigate(R.id.action_nav_home_to_searchresultFragment, searchBundle)
+                searchProduct.setQuery("",false)
                 return false
             }
 
@@ -64,7 +64,7 @@ class HomeFragment : Fragment(), CategoryRecyclerAdapter.CategoryItemListener,
         })
 
         seeAllCategoryCardView.setOnClickListener {
-            navController.navigate(R.id.action_nav_home_to_categoryFragment)
+            navController.navigate(R.id.action_nav_home_to_allCategoryFragment)
         }
 
 
@@ -75,7 +75,7 @@ class HomeFragment : Fragment(), CategoryRecyclerAdapter.CategoryItemListener,
         })
 
         homeViewModel.categoryData.observe(this, Observer {
-            val adapter = CategoryRecyclerAdapter(requireContext(), true, it, this)
+            val adapter = HomeCategoryRecyclerAdapter(requireContext(), true, it, this)
             categoryRecyclerView.adapter = adapter
             stopShimmerAnimation()
         })
@@ -95,12 +95,12 @@ class HomeFragment : Fragment(), CategoryRecyclerAdapter.CategoryItemListener,
 
     override fun onFeaturedItemClick(product: Product) {
         val intent = Intent(activity, ProductActivity::class.java)
-        intent.putExtra("product",product)
+        intent.putExtra("productId", "${product.id}")
         startActivity(intent)
     }
 
-    override fun onCategoryItemClick(category: Category) {
-        subCategoryViewModel.selectedCategory.value = category
-        navController.navigate(R.id.action_nav_home_to_subCategoryFragment)
+    override fun onHomeCategoryItemClick(category: Category) {
+        categoryViewModel.selectedCategory.value = category
+        navController.navigate(R.id.action_nav_home_to_categoryFragment)
     }
 }

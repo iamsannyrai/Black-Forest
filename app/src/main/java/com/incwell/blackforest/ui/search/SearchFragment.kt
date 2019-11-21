@@ -1,6 +1,7 @@
 package com.incwell.blackforest.ui.search
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.incwell.blackforest.LOG_TAG
 import com.incwell.blackforest.R
 import com.incwell.blackforest.data.model.SearchedProduct
+import com.incwell.blackforest.ui.product.ProductActivity
 import org.koin.android.ext.android.inject
 
 
@@ -71,10 +73,14 @@ class SearchFragment : Fragment(),
     }
 
     override fun onSearchItemClick(searchedProduct: SearchedProduct) {
-        Log.i(LOG_TAG, searchedProduct.name)
+        val intent = Intent(activity, ProductActivity::class.java)
+        intent.putExtra("productId", "${searchedProduct.id}")
+        startActivity(intent)
     }
 
     override fun onSuggestionItemClick(suggestedProduct: SearchedProduct) {
-        Log.i(LOG_TAG, suggestedProduct.name)
+        val intent = Intent(activity, ProductActivity::class.java)
+        intent.putExtra("productId", "${suggestedProduct.id}")
+        startActivity(intent)
     }
 }

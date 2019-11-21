@@ -19,16 +19,18 @@ import com.incwell.blackforest.data.storage.SharedPref
 import com.incwell.blackforest.ui.AuthenticationViewModel
 import com.incwell.blackforest.ui.SigninActivity
 import com.incwell.blackforest.ui.cart.CartViewModel
-import com.incwell.blackforest.ui.category.subCategory.SubCategoryViewModel
+import com.incwell.blackforest.ui.category.CategoryViewModel
 import com.incwell.blackforest.ui.home.HomeViewModel
+import com.incwell.blackforest.ui.product.ProductViewModel
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
     val homeViewModel: HomeViewModel by inject()
-    val subCategoryViewModel: SubCategoryViewModel by inject()
+    val categoryViewModel: CategoryViewModel by inject()
     val authenticationViewModel: AuthenticationViewModel by inject()
     val cartViewModel: CartViewModel by inject()
+    val productViewModel: ProductViewModel by inject()
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -78,7 +80,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         when (item.itemId) {
-            R.id.action_account ->{
+            R.id.action_account -> {
                 navController.navigate(R.id.action_nav_home_to_accountFragment)
             }
             R.id.action_logout -> {

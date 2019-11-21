@@ -10,35 +10,31 @@ import com.google.android.material.textfield.TextInputLayout
 import com.incwell.blackforest.R
 import com.incwell.blackforest.data.storage.SharedPref
 import com.incwell.blackforest.util.dropDown
+import com.incwell.blackforest.util.handleEmptyError
 import com.incwell.blackforest.util.hideErrorHint
+import com.incwell.blackforest.util.showSnackbar
 import kotlinx.android.synthetic.main.activity_signup.*
 import org.koin.android.ext.android.inject
 
 class SignupActivity : AppCompatActivity() {
     private lateinit var myCity: HashMap<String, Int>
+
     private val authenticationViewModel: AuthenticationViewModel by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
         myCity = HashMap()
         for (i in 0 until SharedPref.getCity().size) {
-            Log.d("cities1", "${SharedPref.getCity()[i]}")
             myCity[SharedPref.getCity()[i].city] = SharedPref.getCity()[i].id
         }
 
         dropDown(this, myCity.keys.toTypedArray(), city)
 
-        checkBox.setOnCheckedChangeListener { p0, isChecked -> register.isEnabled = isChecked }
+        checkBox.setOnCheckedChangeListener { _, isChecked -> register.isEnabled = isChecked }
         bindData()
         hideError()
-
-        authenticationViewModel.signupResponse.observe(this, Observer {
-            val intent = Intent(this, SigninActivity::class.java)
-            startActivity(intent)
-            finish()
-        })
-
     }
 
     private fun bindData() {
@@ -76,31 +72,30 @@ class SignupActivity : AppCompatActivity() {
                     handleEmptyError(til_address)
                     return@setOnClickListener
                 }
-
                 else -> {
                     authenticationViewModel.registerUser(
-                        user_name.text.toString(),
-                        first_name.text.toString(),
-                        last_name.text.toString(),
-                        email.text.toString(),
-                        password.text.toString(),
+                        user_name.text.toString().split(" ")[0],
+                        first_name.text.toString().split(" ")[0],
+                        last_name.text.toString().split(" ")[0],
+                        email.text.toString().split(" ")[0],
+                        password.text.toString().split(" ")[0],
                         myCity[city.text.toString()]!!,
                         address.text.toString(),
-                        phone_number.text.toString()
+                        phone_number.text.toString().split(" ")[0]
                     )
-
-                    authenticationViewModel.messageResponse.observe(this, Observer {
-                        Snackbar.make(view, it, Snackbar.LENGTH_SHORT).show()
+                    authenticationViewModel.status.observe(this, Observer {
+                        if (it) {
+                            val intent = Intent(this, SigninActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            showSnackbar(view, "Something went wrong!")
+                        }
                     })
                 }
 
             }
         }
-    }
-
-    private fun handleEmptyError(id: TextInputLayout) {
-        id.error = "This field is empty!"
-        id.requestFocus()
     }
 
     private fun hideError() {
