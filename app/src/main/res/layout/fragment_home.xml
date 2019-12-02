@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchview_product"
         android:layout_width="match_parent"
@@ -18,7 +17,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_layout"
@@ -118,7 +116,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
 
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
@@ -140,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="Categories"
+                android:text="@string/categories"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -186,7 +183,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="Featured"
+                android:text="@string/featured"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_categories" />

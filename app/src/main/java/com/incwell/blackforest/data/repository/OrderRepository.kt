@@ -7,8 +7,5 @@ import com.incwell.blackforest.data.storage.SharedPref
 import java.util.ArrayList
 
 class OrderRepository(private val blackForestService: BlackForestService) {
-    fun getCartItemsFromLocalStorage(): ArrayList<CartItem> {
-        return SharedPref.getCart()
-    }
     suspend fun orderProduct(newAddress:NewAddress)=blackForestService.orderProduct(newAddress)
 }

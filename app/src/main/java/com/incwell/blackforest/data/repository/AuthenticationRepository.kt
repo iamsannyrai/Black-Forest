@@ -24,6 +24,7 @@ class AuthenticationRepository(private val authenticationService: Authentication
     suspend fun getCities() = authenticationService.getCities()
 
     suspend fun registerUser(user: User) = authenticationService.registerUser(user)
+
     suspend fun signinUser(credential: SignIn) = authenticationService.signinUser(credential)
 
     suspend fun resetPassword(email: Email)=authenticationService.resetPassword(email)

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.SigninActivity">
-
+    tools:context=".TestActivity">
     <ImageView
         android:id="@+id/logo"
         android:layout_width="219dp"

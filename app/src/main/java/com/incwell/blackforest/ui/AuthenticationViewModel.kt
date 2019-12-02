@@ -73,6 +73,7 @@ class AuthenticationViewModel(private val authenticationRepository: Authenticati
             try {
                 val signInResponse = authenticationRepository.signinUser(credential)
                 if (signInResponse.isSuccessful) {
+                    Log.d("userToken",signInResponse.body()!!.data!!.token)
                     authenticationRepository.saveCredential(
                         tokenKey,
                         signInResponse.body()!!.data!!.token

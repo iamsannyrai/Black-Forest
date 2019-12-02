@@ -7,14 +7,31 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <string name="accessToken">147134865650-t5rdmdtjtv47ofj12689gj5fr8tass4d.apps.googleusercontent.com</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="or_sign_in_with">Or sign in with</string>
+    <string name="don_t_have_an_account">Don\'t have an account ?</string>
+    <string name="register">Register</string>
+    <string name="empty_field_error_msg">This field is empty!</string>
+    <string name="password_mismatch">"Passwords don't match. Please try again!"</string>
+    <string name="reset">Reset</string>
+    <string name="reset_your_password">Reset your password.</string>
+    <string name="less_password">Password must be at least 8 characters long!</string>
+    <string name="email">Email</string>
+    <string name="city">City</string>
+    <string name="address">Address</string>
+    <string name="sign_up">Sign up</string>
+    <string name="i_agree_to_the_terms_and_conditions">I agree to the terms and conditions</string>
+    <string name="registration">Registration</string>
+    <string name="featured">Featured</string>
+    <string name="categories">Categories</string>
+    <string name="change">Change</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="new_password">New Password</string>
+    <string name="old_password">Old Password</string>
+    <string name="networkError">Connection timeout. Please Try again later!</string>
 </resources>

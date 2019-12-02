@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cv_cart"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -28,8 +27,7 @@
             <ImageView
                 android:id="@+id/imageView_productImage"
                 android:layout_width="150dp"
-                android:layout_height="150dp"
-                tools:srcCompat="@tools:sample/backgrounds/scenic[9]" />
+                android:layout_height="150dp" />
         </androidx.cardview.widget.CardView>
 
         <androidx.constraintlayout.widget.Guideline
@@ -43,25 +41,23 @@
 
         <TextView
             android:id="@+id/tv_productName"
-            style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:text="Chocolate Truffle"
             android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_productDescription"
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Sweet Raspberries with Chocolate cupcake is the perfect desert for any occasion."
             android:textColor="@color/colorText"
             app:layout_constraintBottom_toBottomOf="@+id/cardView"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"

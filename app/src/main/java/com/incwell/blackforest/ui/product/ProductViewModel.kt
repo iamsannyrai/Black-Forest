@@ -10,6 +10,7 @@ import com.incwell.blackforest.util.NoInternetException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.SocketTimeoutException
 
 class ProductViewModel(private val productRepository: ProductRepository) : ViewModel() {
 
@@ -17,16 +18,23 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
     val product: LiveData<Product>
         get() = _product
 
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String>
+        get() = _errorMessage
+
     fun getProductDetail(id: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val res = productRepository.getProductDetail(id)
                 if (res.isSuccessful) {
-                    Log.d("productDetail", "${res.body()!!.data}")
                     _product.postValue(res.body()!!.data)
+                } else {
+                    _errorMessage.postValue(res.message())
                 }
             } catch (e: NoInternetException) {
-
+                _errorMessage.postValue(e.message)
+            } catch (e: SocketTimeoutException) {
+                _errorMessage.postValue(e.message)
             }
         }
     }

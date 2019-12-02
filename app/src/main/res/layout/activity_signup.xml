@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.SignupActivity">
 
+    <ProgressBar
+        android:id="@+id/pb_registration"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
         android:layout_width="wrap_content"
@@ -121,8 +133,7 @@
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-          
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,6 +143,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:errorEnabled="true"
+        app:helperTextEnabled="true"
+        app:helperText="@string/less_password"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/til_email"
@@ -141,8 +154,7 @@
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-          
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -161,8 +173,8 @@
             android:layout_height="wrap_content"
             android:focusable="false"
             android:focusableInTouchMode="false"
-          
-            android:hint="City" />
+            android:hint="@string/city" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -180,9 +192,8 @@
             android:id="@+id/address"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-          
             android:gravity="start"
-            android:hint="Address"
+            android:hint="@string/address"
             android:inputType="textMultiLine" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -190,8 +201,8 @@
         android:id="@+id/register"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:text="Sign up"
+        android:layout_marginTop="8dp"
+        android:text="@string/sign_up"
         app:cornerRadius="20dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
@@ -210,19 +221,20 @@
         android:layout_height="wrap_content"
         android:checked="true"
         android:fontFamily="sans-serif-light"
-        android:text="I agree to the terms and conditions"
+        android:text="@string/i_agree_to_the_terms_and_conditions"
         android:textColor="@color/colorTitle"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/til_address" />
 
     <TextView
         android:id="@+id/textView18"
-        style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
-        android:text="Registration"
+        android:text="@string/registration"
         android:textColor="@color/colorTitle"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintStart_toStartOf="@+id/guideline5"

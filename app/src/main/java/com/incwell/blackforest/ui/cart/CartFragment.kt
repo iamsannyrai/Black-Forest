@@ -2,8 +2,6 @@ package com.incwell.blackforest.ui.cart
 
 
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +11,7 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -25,21 +24,23 @@ import com.google.android.material.snackbar.Snackbar
 import com.incwell.blackforest.LOG_TAG
 import com.incwell.blackforest.R
 import com.incwell.blackforest.data.model.CartItem
+import com.incwell.blackforest.data.model.UpdateItem
 import com.incwell.blackforest.data.storage.SharedPref
-import kotlinx.android.synthetic.main.fragment_cart.*
+import com.incwell.blackforest.util.showSnackbar
 import kotlinx.android.synthetic.main.fragment_cart.view.*
 import org.koin.android.ext.android.inject
+import java.lang.IndexOutOfBoundsException
 
 class CartFragment : Fragment() {
 
     private val cartViewModel: CartViewModel by inject()
 
-    private lateinit var emptyCart: ImageView
-    private lateinit var checkoutBtn: MaterialButton
     private lateinit var navController: NavController
-    private lateinit var adapter: CartRecyclerAdapter
     private lateinit var trashIcon: Drawable
+    private lateinit var adapter: CartRecyclerAdapter
+
     private var totalAmount: Double = 0.0
+    private var cartItems: ArrayList<CartItem> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,24 +54,35 @@ class CartFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val root = inflater.inflate(R.layout.fragment_cart, container, false)
+
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
 
-        emptyCart = root.iv_empty_cart
-        checkoutBtn = root.checkout
-
-        adapter = CartRecyclerAdapter(requireContext(), SharedPref.getCart())
-
-
         //checkout whether data is empty or not
-        val cartItems = SharedPref.getCart()
-        showEmptyView(cartItems)
-        adapter.setItemClearListener(object : ItemRemoveListener {
-            override fun onItemCleared() {
-                showEmptyView(ArrayList())
+        cartViewModel.getCartItem()
+        cartViewModel.cartData.observe(this, Observer {
+            cartItems.clear()
+            for (element in it) {
+                cartItems.add(element)
             }
-        })
+            if (it.isEmpty()) {
+                root.iv_empty_cart.visibility = View.VISIBLE
+                root.checkout.visibility = View.GONE
+            } else {
+                root.iv_empty_cart.visibility = View.GONE
+                root.checkout.visibility = View.VISIBLE
 
-        root.rv_cart.adapter = adapter
+                adapter = CartRecyclerAdapter(requireContext(), cartItems,cartViewModel)
+                root.rv_cart.adapter = adapter
+
+                adapter.setItemClearListener(object : ItemRemoveListener {
+                    override fun onItemCleared() {
+                        root.iv_empty_cart.visibility = View.VISIBLE
+                        root.checkout.visibility = View.GONE
+                    }
+                })
+            }
+            Log.d("size", "size ${cartItems.size}")
+        })
 
         //for swiping to remove item from cart
         val simpleCallback = object :
@@ -85,22 +97,33 @@ class CartFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val pos = viewHolder.adapterPosition
+                Log.d("size", "Before index $pos, size ${cartItems.size}")
                 if (direction == ItemTouchHelper.LEFT) {
-                    Log.d(LOG_TAG, "Swiped left product at pos $pos id is : ${cartItems[pos].id}")
-                    //function to remove item from cart
-                    cartViewModel.removeItemFromCart(cartItems[pos].id)
-                    cartViewModel.cartResult.observe(activity!!, Observer {
-                        when (it) {
-                            "removed" -> {
-                                adapter.removeItem(pos)
-                                Snackbar.make(
-                                    view!!,
-                                    "Item removed successfully!",
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
+                    cartViewModel.removeItemFromCart(cartItems[pos].id!!)
+                    cartViewModel.removeFromCartResponse.observe(activity!!, Observer {
+                        try {
+                            when (it) {
+                                true -> {
+                                    cartItems.removeAt(pos)
+                                    adapter.notifyItemRemoved(pos)
+                                    if (cartItems.isEmpty()) {
+                                        adapter.mItemRemoveListener.onItemCleared()
+                                    }
+                                    context!!.showSnackbar(view!!, "Item removed successfully!")
+                                }
+                                false -> {
+                                    context!!.showSnackbar(
+                                        view!!,
+                                        "Something went wrong while removing item from cart. Please try again later"
+                                    )
+                                }
                             }
+                        }catch (e:IndexOutOfBoundsException){
+
                         }
+                        Log.d("size", "After index $pos, size ${cartItems.size}")
                     })
+
                 }
             }
 
@@ -145,14 +168,11 @@ class CartFragment : Fragment() {
         val itemTouchHelper = ItemTouchHelper(simpleCallback)
         itemTouchHelper.attachToRecyclerView(root.rv_cart)
 
-        getTotalAmount()
 
         root.checkout.setOnClickListener {
             Toast.makeText(context, "$totalAmount", Toast.LENGTH_LONG).show()
             navController.navigate(R.id.action_cartFragment_to_orderFragment)
         }
-
-
         return root
     }
 
@@ -161,18 +181,13 @@ class CartFragment : Fragment() {
         menu.clear()
     }
 
-    private fun getTotalAmount() {
-        val items = SharedPref.getCart()
-        for (i in 0 until items.size) {
-            totalAmount += items[i].quantity * items[i].price.toDouble()
-        }
-        Log.d("total", "$totalAmount")
-    }
-
-    private fun showEmptyView(cartItems: ArrayList<CartItem>) {
-        emptyCart.visibility = if (cartItems.isEmpty()) View.VISIBLE else View.GONE
-        checkoutBtn.visibility = if (cartItems.isNotEmpty()) View.VISIBLE else View.GONE
-    }
+//    private fun getTotalAmount() {
+//        val items = cartItems
+//        for (i in items.indices) {
+//            totalAmount += items[i].quantity * items[i].price.toDouble()
+//        }
+//        Log.d("total", "$totalAmount")
+//    }
 }
 
 

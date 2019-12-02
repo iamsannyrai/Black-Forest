@@ -2,6 +2,7 @@ package com.incwell.blackforest.ui.about
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -13,6 +14,11 @@ import com.incwell.blackforest.R
 class AboutFragment : Fragment() {
 
     private lateinit var aboutViewModel: AboutViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,4 +34,11 @@ class AboutFragment : Fragment() {
         })
         return root
     }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.clear()
+    }
+
+
 }

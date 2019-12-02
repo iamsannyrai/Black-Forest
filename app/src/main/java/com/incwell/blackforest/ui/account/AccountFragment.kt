@@ -22,7 +22,15 @@ import com.incwell.blackforest.R
 import com.incwell.blackforest.data.model.*
 import com.incwell.blackforest.data.storage.SharedPref
 import com.incwell.blackforest.util.dropDown
+import com.incwell.blackforest.util.hideErrorHint
 import kotlinx.android.synthetic.main.activity_signup.*
+import kotlinx.android.synthetic.main.custom_dialog_change_address.*
+import kotlinx.android.synthetic.main.custom_dialog_change_address.view.*
+import kotlinx.android.synthetic.main.custom_dialog_change_city.view.*
+import kotlinx.android.synthetic.main.custom_dialog_change_password.*
+import kotlinx.android.synthetic.main.custom_dialog_change_password.view.*
+import kotlinx.android.synthetic.main.custom_dialog_change_phone_number.*
+import kotlinx.android.synthetic.main.custom_dialog_change_phone_number.view.*
 import kotlinx.android.synthetic.main.fragment_account.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -61,9 +69,12 @@ class AccountFragment : Fragment() {
             if (root.cv_login_security_content.visibility == View.VISIBLE) {
                 TransitionManager.beginDelayedTransition(root.cv_login_security, AutoTransition())
                 root.cv_login_security_content.visibility = View.GONE
+                root.iv_show_hide1.setImageResource(R.drawable.ic_keyboard_arrow_up)
             } else {
                 TransitionManager.beginDelayedTransition(root.cv_login_security, AutoTransition())
                 root.cv_login_security_content.visibility = View.VISIBLE
+                root.iv_show_hide1.setImageResource(R.drawable.ic_keyboard_arrow_down)
+
             }
         }
         root.accountPhoneNumber.setOnClickListener {
@@ -83,9 +94,12 @@ class AccountFragment : Fragment() {
         root.iv_show_hide2.setOnClickListener {
             if (root.cv_delivery_address_content.visibility == View.GONE) {
                 TransitionManager.beginDelayedTransition(root.cv_delivery_address, AutoTransition())
+                root.iv_show_hide2.setImageResource(R.drawable.ic_keyboard_arrow_down)
                 root.cv_delivery_address_content.visibility = View.VISIBLE
+
             } else {
                 TransitionManager.beginDelayedTransition(root.cv_delivery_address, AutoTransition())
+                root.iv_show_hide2.setImageResource(R.drawable.ic_keyboard_arrow_up)
                 root.cv_delivery_address_content.visibility = View.GONE
             }
         }
@@ -94,9 +108,12 @@ class AccountFragment : Fragment() {
             if (root.cv_order_history_content.visibility == View.GONE) {
                 TransitionManager.beginDelayedTransition(root.cv_order_history, AutoTransition())
                 root.cv_order_history_content.visibility = View.VISIBLE
+                root.iv_show_hide3.setImageResource(R.drawable.ic_keyboard_arrow_down)
+
             } else {
                 TransitionManager.beginDelayedTransition(root.cv_order_history, AutoTransition())
                 root.cv_order_history_content.visibility = View.GONE
+                root.iv_show_hide3.setImageResource(R.drawable.ic_keyboard_arrow_up)
             }
         }
 
@@ -110,8 +127,14 @@ class AccountFragment : Fragment() {
 
         accountViewModel.getHistory()
         accountViewModel.orderHistory.observe(this, Observer {
-            val adapter = OrderHistoryRecyclerAdapter(requireContext(), it!!)
-            orderRecyclerView.adapter = adapter
+            if (it!!.isEmpty()) {
+                orderRecyclerView.visibility = View.GONE
+                root.tv_orderHistory.visibility = View.VISIBLE
+            } else {
+                root.tv_orderHistory.visibility = View.GONE
+                val adapter = OrderHistoryRecyclerAdapter(requireContext(), it)
+                orderRecyclerView.adapter = adapter
+            }
         })
 
         return root
@@ -135,23 +158,28 @@ class AccountFragment : Fragment() {
         dialog.show()
 
         changeBtn.setOnClickListener {
-            progressBar.visibility = View.VISIBLE
-            val phoneNumber = PhoneNumber(phone_number = newPhoneNumber.text.toString())
-            accountViewModel.changePhoneNumber(phoneNumber)
-            accountViewModel.status.observe(this, Observer { status ->
-                progressBar.visibility = View.GONE
-                if (status) {
-                    dialog.dismiss()
-                    root.accountPhoneNumber.setText(newPhoneNumber.text.toString())
-                } else {
-                    dialog.dismiss()
-                }
-            })
+            if (newPhoneNumber.text.isNullOrEmpty()) {
+                customView.til_newPhoneNum.error = getString(R.string.empty_field_error_msg)
+            } else {
+                progressBar.visibility = View.VISIBLE
+                val phoneNumber = PhoneNumber(phone_number = newPhoneNumber.text.toString())
+                accountViewModel.changePhoneNumber(phoneNumber)
+                accountViewModel.status.observe(this, Observer { status ->
+                    progressBar.visibility = View.GONE
+                    if (status) {
+                        dialog.dismiss()
+                        root.accountPhoneNumber.setText(newPhoneNumber.text.toString())
+                    } else {
+                        dialog.dismiss()
+                    }
+                })
+            }
         }
         cancelBtn.setOnClickListener {
             dialog.dismiss()
             // TODO: Display necessary stuffs
         }
+        hideErrorHint(newPhoneNumber, customView.til_newPhoneNum)
     }
 
     private fun openDialogToChangePassword(root: View) {
@@ -169,32 +197,48 @@ class AccountFragment : Fragment() {
         dialog.show()
 
         changeBtn.setOnClickListener {
-            if (newPassword == confirmPassword) {
-                progressBar.visibility = View.VISIBLE
-                val password = NewPassword(
-                    old_password = oldPassword.text.toString(),
-                    new_password = newPassword.text.toString(),
-                    confirm_password = confirmPassword.text.toString()
-                )
-                accountViewModel.changePassword(password)
-                accountViewModel.status.observe(this, Observer { status ->
-                    progressBar.visibility = View.GONE
-                    if (status) {
-                        dialog.dismiss()
-                        root.accountPassword.setText(newPassword.text.toString())
-                    } else {
-                        dialog.dismiss()
-                    }
-                })
-            } else {
-                // TODO: Display necessary stuffs
+            when {
+                oldPassword.text.isNullOrEmpty() -> {
+                    customView.til_oldPassword.error = getString(R.string.empty_field_error_msg)
+                    return@setOnClickListener
+                }
+                newPassword.text.isNullOrEmpty() -> {
+                    customView.til_newPassword.error = getString(R.string.empty_field_error_msg)
+                    return@setOnClickListener
+                }
+                confirmPassword.text.isNullOrEmpty() -> {
+                    customView.til_confirmPassword.error = getString(R.string.empty_field_error_msg)
+                    return@setOnClickListener
+                }
+                newPassword != confirmPassword -> customView.til_confirmPassword.error =
+                    getString(R.string.password_mismatch)
+                else -> {
+                    progressBar.visibility = View.VISIBLE
+                    val password = NewPassword(
+                        old_password = oldPassword.text.toString(),
+                        new_password = newPassword.text.toString(),
+                        confirm_password = confirmPassword.text.toString()
+                    )
+                    accountViewModel.changePassword(password)
+                    accountViewModel.status.observe(this, Observer { status ->
+                        progressBar.visibility = View.GONE
+                        if (status) {
+                            dialog.dismiss()
+                            root.accountPassword.setText(newPassword.text.toString())
+                        } else {
+                            dialog.dismiss()
+                        }
+                    })
+                }
             }
         }
-
         cancelBtn.setOnClickListener {
             dialog.dismiss()
         }
 
+        hideErrorHint(oldPassword, customView.til_oldPassword)
+        hideErrorHint(newPassword, customView.til_newPassword)
+        hideErrorHint(confirmPassword, customView.til_confirmPassword)
     }
 
     private fun openDialogToChangeCity(root: View) {
@@ -216,24 +260,30 @@ class AccountFragment : Fragment() {
         dropDown(context!!, myCity.keys.toTypedArray(), newCity)
 
         changeBtn.setOnClickListener {
-            progressBar.visibility = View.VISIBLE
-            val city = NewCity(city = myCity[newCity.text.toString()]!!)
-            accountViewModel.changeCity(city)
-            accountViewModel.status.observe(this, Observer { status ->
-                progressBar.visibility = View.GONE
-                if (status) {
-                    dialog.dismiss()
-                    root.accountCity.setText(newCity.text.toString())
-                } else {
-                    dialog.dismiss()
-                    // TODO: Display necessary stuffs
-                }
-            })
+            if (newCity.text.isNullOrEmpty()) {
+                customView.til_newCity.error = getString(R.string.empty_field_error_msg)
+                return@setOnClickListener
+            } else {
+                progressBar.visibility = View.VISIBLE
+                val city = NewCity(city = myCity[newCity.text.toString()]!!)
+                accountViewModel.changeCity(city)
+                accountViewModel.status.observe(this, Observer { status ->
+                    progressBar.visibility = View.GONE
+                    if (status) {
+                        dialog.dismiss()
+                        root.accountCity.setText(newCity.text.toString())
+                    } else {
+                        dialog.dismiss()
+                        // TODO: Display necessary stuffs
+                    }
+                })
+            }
         }
 
         cancelBtn.setOnClickListener {
             dialog.dismiss()
         }
+
     }
 
     private fun openDialogToChangeAddress(root: View) {
@@ -249,24 +299,32 @@ class AccountFragment : Fragment() {
         dialog.show()
 
         changeBtn.setOnClickListener {
-            progressBar.visibility = View.VISIBLE
-            val address = Address(address = newAddress.text.toString())
-            accountViewModel.changeAddress(address)
-            accountViewModel.status.observe(this, Observer { status ->
-                progressBar.visibility = View.GONE
-                if (status) {
-                    dialog.dismiss()
-                    root.accountAddress.setText(newAddress.text.toString())
-                } else {
-                    dialog.dismiss()
-                    // TODO: Display necessary stuffs
-                }
-            })
+            if (newAddress.text.isNullOrEmpty()) {
+                customView.til_newAddress.error = getString(R.string.empty_field_error_msg)
+                return@setOnClickListener
+            } else {
+                progressBar.visibility = View.VISIBLE
+                val address = Address(address = newAddress.text.toString())
+                accountViewModel.changeAddress(address)
+                accountViewModel.status.observe(this, Observer { status ->
+                    progressBar.visibility = View.GONE
+                    if (status) {
+                        dialog.dismiss()
+                        root.accountAddress.setText(newAddress.text.toString())
+                    } else {
+                        dialog.dismiss()
+                        // TODO: Display necessary stuffs
+                    }
+                })
+            }
         }
 
         cancelBtn.setOnClickListener {
             dialog.dismiss()
         }
+
+        hideErrorHint(newAddress, customView.til_newAddress)
+
     }
 
 }

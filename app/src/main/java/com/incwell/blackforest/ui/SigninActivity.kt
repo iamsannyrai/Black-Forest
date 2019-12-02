@@ -71,7 +71,12 @@ class SigninActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         google_sign_in_button.setOnClickListener {
-            googleSignIn()
+//            googleSignIn()
+            showSnackbar(it,"Coming soon!")
+        }
+
+        fb_sign_in_button.setOnClickListener {
+            showSnackbar(it,"Coming soon!")
         }
 
         register_btn.setOnClickListener {

@@ -21,12 +21,12 @@
 
         <TextView
             android:id="@+id/tv_searchedItem"
-            style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Chocolate Truffle"
+            android:textSize="18sp"
             android:textColor="@color/colorAccent"
             app:layout_constraintStart_toEndOf="@+id/iv_searchedItem"
             app:layout_constraintTop_toTopOf="parent" />

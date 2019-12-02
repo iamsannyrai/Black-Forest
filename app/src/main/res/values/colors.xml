@@ -5,6 +5,7 @@
     <color name="colorAccent">#eb5230</color>
     <color name="colorTitle">#003311</color>
     <color name="colorText">#808080</color>
+    <color name="fab_bg">#ffffff</color>
 
     <color name="placeholder_bg">#dddddd</color>
     <color name="badge_background_color">@color/colorAccent</color>

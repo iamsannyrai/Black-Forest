@@ -13,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PasswordResetDoneActivity">
+        <activity
+            android:name=".TestActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".ui.PasswordResetDoneActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -26,11 +30,9 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.PasswordResetActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -40,15 +42,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.product.ProductActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.SignupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.SigninActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -60,7 +59,7 @@
 
                 <data
                     android:host="dev.blackforest.incwell.com.np"
-                    android:pathPrefix="/activate/"
+                    android:pathPrefix="/v1/api/activate/"
                     android:scheme="http" />
             </intent-filter>
         </activity>

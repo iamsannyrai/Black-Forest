@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.incwell.blackforest.R
 import com.incwell.blackforest.data.model.CartItem
+import com.incwell.blackforest.data.storage.SharedPref
 import kotlinx.android.synthetic.main.cart_inc_dec.view.*
 
 
@@ -21,7 +22,6 @@ class CartView @JvmOverloads constructor(
 
     private lateinit var mCartItem: CartItem
 
-
     init {
         init(context)
     }
@@ -33,6 +33,7 @@ class CartView @JvmOverloads constructor(
         iv_plus.setOnClickListener {
             tv_display.text = (tv_display.text.toString().toInt() + 1).toString()
             mCartItem.quantity = tv_display.text.toString().toInt()
+
         }
 
         iv_minus.setOnClickListener {
@@ -46,10 +47,5 @@ class CartView @JvmOverloads constructor(
     fun setData(cartItem: CartItem) {
         mCartItem = cartItem
         tv_display.text = mCartItem.quantity.toString()
-    }
-
-    fun getQuantity(cartItem: CartItem): Int {
-        mCartItem = cartItem
-        return mCartItem.quantity
     }
 }

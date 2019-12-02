@@ -96,6 +96,4 @@ dependencies {
 
     //Hawk
     implementation "com.orhanobut:hawk:2.0.1"
-
-
 }

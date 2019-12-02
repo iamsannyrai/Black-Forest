@@ -1,15 +1,10 @@
 package com.incwell.blackforest.data.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.incwell.blackforest.LOG_TAG
 import com.incwell.blackforest.data.BlackForestService
-import com.incwell.blackforest.data.model.CartItem
 import com.incwell.blackforest.data.model.Category
-import com.incwell.blackforest.data.model.City
 import com.incwell.blackforest.data.model.Product
-import com.incwell.blackforest.data.storage.SharedPref
 import com.incwell.blackforest.util.NoInternetException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,33 +21,42 @@ class HomeRepository(private val blackForestService: BlackForestService) {
     val categoryData: LiveData<List<Category>>
         get() = _categoryData
 
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String>
+        get() = _errorMessage
+
     init {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 retrieveCategories()
                 retrieveFeaturedProduct()
             } catch (e: NoInternetException) {
-                Log.i(LOG_TAG, e.message!!)
+                _errorMessage.postValue(e.message)
             } catch (e: SocketTimeoutException) {
-                Log.i(LOG_TAG, e.message!!)
+                _errorMessage.postValue(e.message)
             }
         }
     }
 
     private suspend fun retrieveCategories() {
-        val res = blackForestService.getCategories().isSuccessful
-        if (res) {
+        val res = blackForestService.getCategories()
+        if (res.isSuccessful) {
             val serviceData = blackForestService.getCategories().body()?.data ?: emptyList()
             _categoryData.postValue(serviceData)
+        } else {
+            val responseMessage = blackForestService.getCategories().message()
+            _errorMessage.postValue(responseMessage)
         }
     }
 
     private suspend fun retrieveFeaturedProduct() {
-        val res = blackForestService.getFeaturedProduct().isSuccessful
-        if (res) {
+        val res = blackForestService.getFeaturedProduct()
+        if (res.isSuccessful) {
             val serviceData = blackForestService.getFeaturedProduct().body()?.data ?: emptyList()
             _featuredData.postValue(serviceData)
+        } else {
+            val responseMessage = blackForestService.getFeaturedProduct().message()
+            _errorMessage.postValue(responseMessage)
         }
     }
-
 }

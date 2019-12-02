@@ -16,20 +16,20 @@ import androidx.transition.TransitionManager
 import com.google.android.material.snackbar.Snackbar
 import com.incwell.blackforest.R
 import com.incwell.blackforest.TAX
+import com.incwell.blackforest.data.model.CartItem
 import com.incwell.blackforest.data.model.NewAddress
 import com.incwell.blackforest.data.storage.SharedPref
-import com.incwell.blackforest.ui.home.FeaturedRecyclerAdapter
+import com.incwell.blackforest.ui.cart.CartViewModel
 import com.incwell.blackforest.util.dropDown
-import kotlinx.android.synthetic.main.activity_signup.*
-import kotlinx.android.synthetic.main.fragment_order.*
 import kotlinx.android.synthetic.main.fragment_order.view.*
 import org.koin.android.ext.android.inject
+import kotlin.collections.HashMap
 
 class OrderFragment : Fragment() {
 
     private val orderViewModel: OrderViewModel by inject()
+    private val cartViewModel: CartViewModel by inject()
     private lateinit var myCity: HashMap<String, Int>
-    private lateinit var orderRecyclerView: RecyclerView
     private lateinit var navController: NavController
     private var subtotal: Double = 0.0
 
@@ -45,15 +45,15 @@ class OrderFragment : Fragment() {
         // Inflate the layout for this fragment
         val root = inflater.inflate(R.layout.fragment_order, container, false)
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-        orderRecyclerView = root.rv_order
 
-        val adapter = OrderRecyclerAdapter(requireContext(), orderViewModel.cartItem)
-        orderRecyclerView.adapter = adapter
-
-        root.subTotal.text = getSubTotalAmount().toString()
-        root.tax.text = calculateTax().toString()
-        root.orderTotal.text = calculateTotal().toString()
-
+        cartViewModel.getCartItem()
+        cartViewModel.cartData.observe(this, Observer {
+            val adapter = OrderRecyclerAdapter(requireContext(), it)
+            root.rv_order.adapter = adapter
+            root.subTotal.text = getSubTotalAmount(it).toString()
+            root.tax.text = calculateTax().toString()
+            root.orderTotal.text = calculateTotal().toString()
+        })
 
         myCity = HashMap()
         for (i in 0 until SharedPref.getCity().size) {
@@ -74,32 +74,36 @@ class OrderFragment : Fragment() {
         }
 
         root.order.setOnClickListener { orderBtn ->
-            Log.d("checkbox", "${checkbox.isChecked}")
+            root.pb_order.visibility = View.VISIBLE
             val newAddress = NewAddress(
                 1,
                 checkbox.isChecked,
                 root.other_phone_number.text.toString(),
-                "${myCity[root.other_city.text.toString()]!!}",
+                "${myCity[root.other_city.text.toString()]}",
                 root.other_address.text.toString()
             )
             orderViewModel.orderProduct(newAddress)
             orderViewModel.orderReqResponse.observe(this, Observer {
+                root.pb_order.visibility = View.GONE
                 if (it) {
                     Snackbar.make(
                         orderBtn,
                         "Your order is confirmed. Please check mail.",
                         Snackbar.LENGTH_SHORT
                     ).show()
-                    SharedPref.deleteAllCartItem()
                     navController.navigate(R.id.action_orderFragment_to_nav_home)
                 } else {
                     Snackbar.make(
                         orderBtn,
-                        "Sorry your order couldnot be confirmed!",
+                        "Something went wrong!",
                         Snackbar.LENGTH_SHORT
                     ).show()
                 }
 
+            })
+
+            orderViewModel.message.observe(this, Observer {
+                Snackbar.make(orderBtn, it, Snackbar.LENGTH_SHORT).show()
             })
         }
 
@@ -111,10 +115,10 @@ class OrderFragment : Fragment() {
         menu.clear()
     }
 
-    private fun getSubTotalAmount(): Double {
-        val items = SharedPref.getCart()
-        for (i in 0 until items.size) {
-            subtotal += (items[i].quantity * items[i].price.toInt()).toDouble()
+
+    private fun getSubTotalAmount(cartItems:List<CartItem>): Double {
+        for (i in cartItems.indices) {
+            subtotal += (cartItems[i].quantity * cartItems[i].price.toInt()).toDouble()
         }
         return subtotal
     }

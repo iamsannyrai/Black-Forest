@@ -45,8 +45,9 @@ interface SharedPref {
 
         //functions for maintaining cart
         fun addToCart(product: Product) {
+            Log.d("productIDD","${product.id}")
             val products = getCart()
-            val cartItem = CartItem(product.name, product.price, product.id, product.main_image)
+            val cartItem = CartItem(product.name, product.price, null, product.main_image,product_id = product.id)
             products.add(cartItem)
             Hawk.put(CART_ITEM, products)
 
@@ -62,11 +63,6 @@ interface SharedPref {
 
         fun saveCartItems(cartItems: ArrayList<CartItem>) {
             Hawk.put(CART_ITEM, cartItems)
-        }
-
-        fun deleteAllCartItem() {
-            Hawk.delete(CART_ITEM)
-            Log.d("delete", "items removed")
         }
     }
 }

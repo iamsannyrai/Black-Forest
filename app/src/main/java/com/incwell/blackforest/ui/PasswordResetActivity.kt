@@ -34,6 +34,10 @@ class PasswordResetActivity : AppCompatActivity() {
                 })
             }
         }
+        cancelMailBtn.setOnClickListener {
+            onBackPressed()
+        }
+
         hideErrorHint(passwordResetEmail, til_passwordResetEmail)
     }
 }

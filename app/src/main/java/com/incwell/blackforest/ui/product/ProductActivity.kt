@@ -4,12 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
 import com.incwell.blackforest.R
 import com.incwell.blackforest.data.model.Product
-import com.incwell.blackforest.data.storage.SharedPref
 import com.incwell.blackforest.ui.cart.CartViewModel
-import com.incwell.blackforest.ui.category.CategoryViewModel
+import com.incwell.blackforest.util.showSnackbar
 import kotlinx.android.synthetic.main.activity_product.*
 import org.koin.android.ext.android.inject
 
@@ -25,8 +23,9 @@ class ProductActivity : AppCompatActivity() {
         setContentView(R.layout.activity_product)
 
         val id = intent.getStringExtra("productId")!!.toInt()
-        productViewModel.getProductDetail(id)
 
+        //function to get product specific detail
+        productViewModel.getProductDetail(id)
         productViewModel.product.observe(this, Observer {
             product = it
             val adapter = IngredientRecyclerAdapter(it.ingredeint)
@@ -38,15 +37,17 @@ class ProductActivity : AppCompatActivity() {
         })
 
         fab_back.setOnClickListener {
-            //works as if it is backpresed
-            onBackPressed()
+            onBackPressed() //works as if it is back pressed
         }
 
         add_to_cart_btn.setOnClickListener { view ->
-            cartViewModel.addToCartResult(product.id.toString())
-            cartViewModel.cartResult.observe(this, Observer {
-                Snackbar.make(view, it, Snackbar.LENGTH_SHORT).show()
-                SharedPref.addToCart(product)
+            cartViewModel.addToCart(product.id.toString())
+            cartViewModel.addToCartResponse.observe(this, Observer {
+                if (it) {
+                    showSnackbar(view, "Item added into cart")
+                } else {
+                    showSnackbar(view, "Something went wrong when adding item into cart")
+                }
             })
         }
     }

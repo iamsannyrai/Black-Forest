@@ -50,7 +50,6 @@
 
         <TextView
             android:id="@+id/cartItemName"
-            style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -64,7 +63,6 @@
 
         <TextView
             android:id="@+id/cartItemPrice"
-            style="@style/TextAppearance.AppCompat.Subhead"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -81,16 +79,39 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="16dp" />
 
-        <com.incwell.blackforest.ui.cart.CartView
-            android:id="@+id/cart_view"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_plus"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView9"
+            app:layout_constraintTop_toBottomOf="@+id/textView9"
+            app:srcCompat="@drawable/ic_plus" />
+
+        <TextView
+            android:id="@+id/tv_display"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/cardView2"
-            app:layout_constraintStart_toStartOf="@+id/guideline14"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            android:layout_marginStart="4dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_plus"
+            app:layout_constraintStart_toEndOf="@+id/iv_plus"
+            app:layout_constraintTop_toTopOf="@+id/iv_plus" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_minus"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_plus"
+            app:layout_constraintStart_toEndOf="@+id/tv_display"
+            app:layout_constraintTop_toTopOf="@+id/iv_plus"
+            app:srcCompat="@drawable/ic_minus" />
 
         <TextView
             android:id="@+id/textView9"

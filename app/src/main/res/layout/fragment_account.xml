@@ -26,12 +26,15 @@
                 android:layout_margin="8dp">
 
                 <TextView
-                    style="@style/TextAppearance.AppCompat.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:text="Login and Security"
+                    android:textColor="@color/colorTitle"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,12 +46,14 @@
                     android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_arrow_drop_down" />
+                    app:srcCompat="@drawable/ic_keyboard_arrow_down" />
 
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cv_login_security_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/iv_show_hide1">
@@ -65,9 +70,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="16dp"
-                            android:hint="Full Name"
                             android:clickable="false"
                             android:focusable="false"
+                            android:hint="Full Name"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
@@ -76,6 +81,7 @@
                                 android:id="@+id/accountFullName"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:backgroundTint="@android:color/transparent"
                                 android:focusableInTouchMode="false" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -84,9 +90,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:hint="Username"
                             android:clickable="false"
                             android:focusable="false"
+                            android:hint="Username"
                             app:layout_constraintEnd_toEndOf="@+id/textInputLayout3"
                             app:layout_constraintStart_toStartOf="@+id/textInputLayout3"
                             app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
@@ -95,6 +101,7 @@
                                 android:id="@+id/accountUserName"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:backgroundTint="@android:color/transparent"
                                 android:focusableInTouchMode="false" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -104,9 +111,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:hint="Email"
                             android:clickable="false"
                             android:focusable="false"
+                            android:hint="Email"
                             app:layout_constraintEnd_toEndOf="@+id/til_account_user_name"
                             app:layout_constraintStart_toStartOf="@+id/til_account_user_name"
                             app:layout_constraintTop_toBottomOf="@+id/til_account_user_name">
@@ -115,8 +122,8 @@
                                 android:id="@+id/accountEmail"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:backgroundTint="@android:color/transparent"
                                 android:focusableInTouchMode="false"
-                              
                                 android:inputType="textEmailAddress" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -137,9 +144,9 @@
                                 android:id="@+id/accountPhoneNumber"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:backgroundTint="@android:color/transparent"
                                 android:focusable="false"
                                 android:focusableInTouchMode="false"
-                              
                                 android:inputType="phone" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -149,9 +156,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:hint="Password"
                             android:clickable="false"
                             android:focusable="false"
+                            android:hint="Password"
                             app:endIconDrawable="@drawable/ic_edit"
                             app:endIconMode="custom"
                             app:layout_constraintEnd_toEndOf="@+id/til_accountPhone"
@@ -162,8 +169,8 @@
                                 android:id="@+id/accountPassword"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:backgroundTint="@android:color/transparent"
                                 android:focusableInTouchMode="false"
-                              
                                 android:inputType="textPassword"
                                 android:text="*********" />
 
@@ -174,9 +181,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:hint="Registered On"
                             android:clickable="false"
                             android:focusable="false"
+                            android:hint="Registered On"
                             app:layout_constraintEnd_toEndOf="@+id/til_account_password"
                             app:layout_constraintStart_toStartOf="@+id/til_account_password"
                             app:layout_constraintTop_toBottomOf="@+id/til_account_password">
@@ -185,12 +192,12 @@
                                 android:id="@+id/accountJoinedDate"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:focusableInTouchMode="false"
-                               />
+                                android:backgroundTint="@android:color/transparent"
+                                android:focusableInTouchMode="false" />
 
                         </com.google.android.material.textfield.TextInputLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -210,13 +217,13 @@
                 android:layout_margin="8dp">
 
                 <TextView
-                    style="@style/TextAppearance.AppCompat.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    
                     android:text="Delivery Address"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -228,7 +235,7 @@
                     android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_arrow_drop_down" />
+                    app:srcCompat="@drawable/ic_keyboard_arrow_up"  />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cv_delivery_address_content"
@@ -265,6 +272,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:focusableInTouchMode="false"
+                                android:backgroundTint="@android:color/transparent"
                                />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -273,11 +281,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:hint="Address"
                             android:clickable="false"
                             android:focusable="false"
-                            app:endIconMode="custom"
+                            android:hint="@string/address"
                             app:endIconDrawable="@drawable/ic_edit"
+                            app:endIconMode="custom"
+                            app:hintEnabled="true"
                             app:layout_constraintEnd_toEndOf="@+id/til_accountCity"
                             app:layout_constraintStart_toStartOf="@+id/til_accountCity"
                             app:layout_constraintTop_toBottomOf="@+id/til_accountCity">
@@ -286,8 +295,8 @@
                                 android:id="@+id/accountAddress"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:focusableInTouchMode="false"
-                               />
+                                android:backgroundTint="@android:color/transparent"
+                                android:focusableInTouchMode="false" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -315,14 +324,14 @@
                 android:layout_margin="8dp">
 
                 <TextView
-                    style="@style/TextAppearance.AppCompat.Title"
                     android:id="@+id/textView17"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    
                     android:text="Order History"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -334,24 +343,45 @@
                     android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_arrow_drop_down" />
+                    app:srcCompat="@drawable/ic_keyboard_arrow_up" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cv_order_history_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:visibility="gone"
+                   android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView17">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_order_history"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/tv_orderHistory"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="No Order History"
+                            android:gravity="center"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_order_history"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </com.google.android.material.card.MaterialCardView>
 

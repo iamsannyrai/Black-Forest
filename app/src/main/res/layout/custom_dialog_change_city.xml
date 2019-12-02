@@ -7,7 +7,6 @@
 
     <TextView
         android:id="@+id/textView15"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -36,7 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:focusable="false"
-            android:focusableInTouchMode="false" />
+            android:focusableInTouchMode="false"
+            android:backgroundTint="@android:color/transparent"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
